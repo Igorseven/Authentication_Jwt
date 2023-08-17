@@ -44,25 +44,19 @@ public class UserIdentityRepository : BaseRepository<UserIdentity>, IUserIdentit
     public async Task<IdentityResult> SaveAsync(UserIdentity entity) =>
         await _userManager.CreateAsync(entity, entity.PasswordHash!);
 
-    public async Task<IdentityResult> UpdateAsync(UserIdentity accountIdentity)
-    {
-        if (accountIdentity.PasswordHash!.Length <= 20)
-        {
-            var hashed = _userManager.PasswordHasher.HashPassword(accountIdentity, accountIdentity.PasswordHash);
-            accountIdentity.PasswordHash = hashed;
-        }
-
-        return await _userManager.UpdateAsync(accountIdentity);
-    }
+    public async Task<IdentityResult> UpdateAsync(UserIdentity accountIdentity) =>
+        await _userManager.UpdateAsync(accountIdentity);
 
     public async Task<string> GenerateTokenToChangePasswordAsync(UserIdentity entity) =>
         await _userManager.GeneratePasswordResetTokenAsync(entity);
 
-    public async Task<IdentityResult> ResetPasswordAsync(UserIdentity entity, string password)
+    public async Task<IdentityResult> ChangePasswordAsync(UserIdentity entity, string currentPassword, string newPassword)
     {
-        var token = await _userManager.GeneratePasswordResetTokenAsync(entity);
-        return await _userManager.ResetPasswordAsync(entity, token, password);
+        DetachedObject(entity);
+
+        return await _userManager.ChangePasswordAsync(entity, currentPassword, newPassword);
     }
+        
 
     public async Task<SignInResult> PasswordSignInAsync(string login, string password) =>
         await _signInManager.PasswordSignInAsync(login, password, false, false);

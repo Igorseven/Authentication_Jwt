@@ -25,7 +25,8 @@ public static class IdentityDI
           .AddRoleManager<RoleManager<Role>>()
           .AddSignInManager<SignInManager<UserIdentity>>()
           .AddRoleValidator<RoleValidator<Role>>()
-          .AddEntityFrameworkStores<ApplicationContext>();
+          .AddEntityFrameworkStores<ApplicationContext>()
+          .AddDefaultTokenProviders();
 
         return services;
     }

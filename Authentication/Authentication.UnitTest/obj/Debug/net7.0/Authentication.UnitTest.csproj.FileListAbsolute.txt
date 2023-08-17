@@ -1,3 +1,4 @@
+C:\Users\Igor Seven\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.UnitTest\obj\Debug\net7.0\Authentication.UnitTest.pdb
 C:\Users\Igor Seven\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.UnitTest\bin\Debug\net7.0\CoverletSourceRootsMapping
 C:\Users\Igor Seven\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.UnitTest\bin\Debug\net7.0\testhost.dll
 C:\Users\Igor Seven\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.UnitTest\bin\Debug\net7.0\testhost.exe
@@ -187,6 +188,5 @@ C:\Users\Igor Seven\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Aut
 C:\Users\Igor Seven\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.UnitTest\obj\Debug\net7.0\Authentication.UnitTest.csproj.CopyComplete
 C:\Users\Igor Seven\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.UnitTest\obj\Debug\net7.0\Authentication.UnitTest.dll
 C:\Users\Igor Seven\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.UnitTest\obj\Debug\net7.0\refint\Authentication.UnitTest.dll
-C:\Users\Igor Seven\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.UnitTest\obj\Debug\net7.0\Authentication.UnitTest.pdb
 C:\Users\Igor Seven\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.UnitTest\obj\Debug\net7.0\Authentication.UnitTest.genruntimeconfig.cache
 C:\Users\Igor Seven\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.UnitTest\obj\Debug\net7.0\ref\Authentication.UnitTest.dll

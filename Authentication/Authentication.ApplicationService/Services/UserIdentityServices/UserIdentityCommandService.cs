@@ -7,6 +7,7 @@ using Authentication.Domain.Entities;
 using Authentication.Domain.Enums;
 using Authentication.Domain.Extensions;
 using Authentication.Domain.Handlers.NotificationHandler;
+using Authentication.Domain.Handlers.ValidationHandler;
 using Authentication.Domain.Interfaces.OthersContracts;
 using Authentication.Domain.Interfaces.RepositoryContracts;
 using Microsoft.AspNetCore.Identity;
@@ -15,32 +16,32 @@ using System.Linq.Expressions;
 namespace Authentication.ApplicationService.Services.UserIdentityServices;
 public class UserIdentityCommandService : BaseService<UserIdentity>, IUserIdentityCommandService
 {
-    private readonly IUserIdentityRepository _accountIdentityRepository;
-    private readonly IUserIdentityMapper _accountIdentityMapper;
+    private readonly IUserIdentityRepository _userIdentityRepository;
+    private readonly IUserIdentityMapper _userIdentityMapper;
 
     public UserIdentityCommandService(IUserIdentityRepository userIdentityRepository,
-                                         IValidate<UserIdentity> validate,
-                                         INotificationHandler notification,
-                                         IUserIdentityMapper userIdentityMapper)
+                                      IValidate<UserIdentity> validate,
+                                      INotificationHandler notification,
+                                      IUserIdentityMapper userIdentityMapper)
         : base(notification, validate)
 
     {
-        _accountIdentityRepository = userIdentityRepository;
-        _accountIdentityMapper = userIdentityMapper;
+        _userIdentityRepository = userIdentityRepository;
+        _userIdentityMapper = userIdentityMapper;
     }
 
-    public void Dispose() => _accountIdentityRepository.Dispose();
+    public void Dispose() => _userIdentityRepository.Dispose();
 
     public async Task<bool> CreateIdentityAccountAsync(UserIdentityRegisterRequest accountIdentityRegisterRequest)
     {
-        if (await _accountIdentityRepository.HaveInTheDatabaseAsync(i => i.NormalizedUserName == accountIdentityRegisterRequest.Login!.ToUpper()))
+        if (await _userIdentityRepository.HaveInTheDatabaseAsync(u => u.NormalizedUserName == accountIdentityRegisterRequest.Login!.ToUpper()))
             return _notification.CreateNotification(UserIdentityServiceTrace.CreateIdentityAccountMethod, EMessage.Exist.GetDescription().FormatTo("Login"));
 
-        var accountIdentity = _accountIdentityMapper.DtoUserIdentityRegisterRequestToDomain(accountIdentityRegisterRequest);
+        var accountIdentity = _userIdentityMapper.DtoUserIdentityRegisterRequestToDomain(accountIdentityRegisterRequest);
 
         if (!await EntityValidationAsync(accountIdentity)) return false;
 
-        var saveResult = await _accountIdentityRepository.SaveAsync(accountIdentity);
+        var saveResult = await _userIdentityRepository.SaveAsync(accountIdentity);
 
         if (!saveResult.Succeeded)
             AddIdentityErrors(saveResult);
@@ -50,23 +51,19 @@ public class UserIdentityCommandService : BaseService<UserIdentity>, IUserIdenti
 
     public async Task<bool> ChangePasswordAsync(UserIdentityChangePasswordRequest accountIdentityChangePasswordRequest)
     {
-        var accountIdentity = await _accountIdentityRepository.FindByPredicateWithSelectorAsync(a => a.Id == accountIdentityChangePasswordRequest.UserIdentityId,
-                                                                                                QueryProjectionForChangePassword(),
-                                                                                                false);
+        var userIdentity = await _userIdentityRepository.FindByPredicateWithSelectorAsync(u => u.Id == accountIdentityChangePasswordRequest.UserIdentityId,
+                                                                                          QueryProjectionForChangePassword(),
+                                                                                          false);
 
-        if (accountIdentity is null)
+        if (userIdentity is null)
             return _notification.CreateNotification(UserIdentityServiceTrace.ChangePassword, EMessage.NotFound.GetDescription().FormatTo("User"));
 
-        var isValid = await _accountIdentityRepository.PasswordSignInAsync(accountIdentity.UserName!, accountIdentityChangePasswordRequest.OldPassword);
+        if (!accountIdentityChangePasswordRequest.NewPassword.ValidatePassword())
+            return _notification.CreateNotification(UserIdentityServiceTrace.ChangePassword, "A senha não atende aos requisitos.");
 
-        if (!isValid.Succeeded)
-            return _notification.CreateNotification(UserIdentityServiceTrace.ChangePassword, "Senha inválida.");
-
-        accountIdentity.PasswordHash = accountIdentityChangePasswordRequest.NewPassword;
-
-        if (!await EntityValidationAsync(accountIdentity)) return false;
-
-        var updateResult = await _accountIdentityRepository.ResetPasswordAsync(accountIdentity, accountIdentityChangePasswordRequest.NewPassword);
+        var updateResult = await _userIdentityRepository.ChangePasswordAsync(userIdentity,
+                                                                             accountIdentityChangePasswordRequest.OldPassword,
+                                                                             accountIdentityChangePasswordRequest.NewPassword);
 
         if (!updateResult.Succeeded)
             AddIdentityErrors(updateResult);
@@ -75,13 +72,14 @@ public class UserIdentityCommandService : BaseService<UserIdentity>, IUserIdenti
     }
 
     private static Expression<Func<UserIdentity, UserIdentity>>? QueryProjectionForChangePassword() =>
-        a => new UserIdentity
-        {
-            Id = a.Id,
-            UserName = a.UserName,
-            PasswordHash = a.PasswordHash,
-            UserStatus = a.UserStatus
-        };
+         u => new UserIdentity
+         {
+             Id = u.Id,
+             UserName = u.UserName,
+             PasswordHash = u.PasswordHash,
+             SecurityStamp = u.SecurityStamp,
+             ConcurrencyStamp = u.ConcurrencyStamp
+         };
 
     private void AddIdentityErrors(IdentityResult identityResult)
     {

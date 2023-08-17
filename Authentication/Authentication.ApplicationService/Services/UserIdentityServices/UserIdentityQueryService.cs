@@ -13,36 +13,36 @@ using System.Security.Claims;
 namespace Authentication.ApplicationService.Services.UserIdentityServices;
 public sealed class UserIdentityQueryService : IUserIdentityQueryService
 {
-    private readonly IUserIdentityRepository _accountIdentityRepository;
-    private readonly IUserIdentityMapper _accountIdentityMapper;
+    private readonly IUserIdentityRepository _userIdentityRepository;
+    private readonly IUserIdentityMapper _userIdentityMapper;
 
-    public UserIdentityQueryService(IUserIdentityRepository accountIdentityRepository,
-                                       IUserIdentityMapper accountIdentityMapper)
+    public UserIdentityQueryService(IUserIdentityRepository userIdentityRepository,
+                                       IUserIdentityMapper userIdentityMapper)
     {
-        _accountIdentityRepository = accountIdentityRepository;
-        _accountIdentityMapper = accountIdentityMapper;
+        _userIdentityRepository = userIdentityRepository;
+        _userIdentityMapper = userIdentityMapper;
     }
 
     public async Task<bool> CheckLoginAndPasswordAsyncAsync(UserLogin login)
     {
-        var loginResult = await _accountIdentityRepository.PasswordSignInAsync(login.Login, login.Password);
+        var loginResult = await _userIdentityRepository.PasswordSignInAsync(login.Login, login.Password);
 
         return loginResult.Succeeded;
     }
 
     public async Task<UserIdentityDataResponse?> FindUserIdentityDataAsync(string userName)
     {
-        var userIdentity = await _accountIdentityRepository.FindByPredicateWithSelectorAsync(a => a.NormalizedUserName == userName.ToUpper(),
+        var userIdentity = await _userIdentityRepository.FindByPredicateWithSelectorAsync(u => u.NormalizedUserName == userName.ToUpper(),
                                                                                              QueryProjectionUserIdentityData(),
                                                                                              true);
 
         if (userIdentity is null) return null;
 
-        return _accountIdentityMapper.DomainToDtoUserIdentityData(userIdentity);
+        return _userIdentityMapper.DomainToDtoUserIdentityData(userIdentity);
     }
 
     public async Task<UserIdentity?> FindByUserNameAsync(string userName) =>
-        await _accountIdentityRepository.FindByPredicateWithSelectorAsync(a => a.NormalizedUserName == userName.ToUpper(), null, true);
+        await _userIdentityRepository.FindByPredicateWithSelectorAsync(u => u.NormalizedUserName == userName.ToUpper(), null, true);
 
     public async Task<string?> ExtractUserFromAccessTokenAsync(ExtractUserRequest extractUserRequest)
     {
@@ -51,7 +51,7 @@ public sealed class UserIdentityQueryService : IUserIdentityQueryService
         ClaimsPrincipal principal = tokenHandler.ValidateToken(extractUserRequest.AccessToken, extractUserRequest.TokenValidationParameters, out SecurityToken securityToken);
 
         if (principal?.Identity?.Name is null ||
-            !await _accountIdentityRepository.HaveInTheDatabaseAsync(a => a.UserName == principal.Identity.Name))
+            !await _userIdentityRepository.HaveInTheDatabaseAsync(u => u.UserName == principal.Identity.Name))
         {
             return null;
         }
@@ -68,8 +68,8 @@ public sealed class UserIdentityQueryService : IUserIdentityQueryService
 
     public async Task<List<Claim>> GetUseClaimsAsync(string userName)
     {
-        var accountIdentity = await _accountIdentityRepository.FindByPredicateWithSelectorAsync(a => a.NormalizedUserName == userName.ToUpper(), null, true);
-        var userRoles = await _accountIdentityRepository.FindAllRolesAsync(accountIdentity!);
+        var accountIdentity = await _userIdentityRepository.FindByPredicateWithSelectorAsync(u => u.NormalizedUserName == userName.ToUpper(), null, true);
+        var userRoles = await _userIdentityRepository.FindAllRolesAsync(accountIdentity!);
 
         var claims = DefaultClaims(accountIdentity!);
 
@@ -88,12 +88,12 @@ public sealed class UserIdentityQueryService : IUserIdentityQueryService
 
 
     private static Expression<Func<UserIdentity, UserIdentity>> QueryProjectionUserIdentityData() =>
-        a => new UserIdentity
+        u => new UserIdentity
         {
-            Id = a.Id,
-            NormalizedUserName = a.NormalizedUserName,
-            UserStatus = a.UserStatus,
-            UserType = a.UserType
+            Id = u.Id,
+            NormalizedUserName = u.NormalizedUserName,
+            UserStatus = u.UserStatus,
+            UserType = u.UserType
         };
 }
 

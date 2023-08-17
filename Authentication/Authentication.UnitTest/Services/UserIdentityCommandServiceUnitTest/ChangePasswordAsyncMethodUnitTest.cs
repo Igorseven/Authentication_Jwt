@@ -22,14 +22,15 @@ public sealed class ChangePasswordAsyncMethodUnitTest : UserIdentityCommandServi
             NewPassword = "@Newtest2023"
         };
 
+
         var accountIdentity = UserIdentityBuilderTest.NewObject().DomainObject();
 
         _userIdentityRepository.Setup(r => r.FindByPredicateWithSelectorAsync(UtilTools.BuildPredicateFunc<UserIdentity>(),
                                                                               UtilTools.BuildSelectorFunc<UserIdentity>(),
                                                                               false)).ReturnsAsync(accountIdentity);
-        _userIdentityRepository.Setup(r => r.PasswordSignInAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(SignInResult.Success);
-        _validate.Setup(v => v.ValidationAsync(It.IsAny<UserIdentity>())).ReturnsAsync(_validationResponse);
-        _userIdentityRepository.Setup(r => r.ResetPasswordAsync(It.IsAny<UserIdentity>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
+        _userIdentityRepository.Setup(r => r.ChangePasswordAsync(It.IsAny<UserIdentity>(),
+                                                                 dtoChangePassword.OldPassword,
+                                                                 dtoChangePassword.NewPassword)).ReturnsAsync(IdentityResult.Success);
 
         var serviceResult = await _userIdentityCommandService.ChangePasswordAsync(dtoChangePassword);
 
@@ -37,21 +38,21 @@ public sealed class ChangePasswordAsyncMethodUnitTest : UserIdentityCommandServi
         _userIdentityRepository.Verify(r => r.FindByPredicateWithSelectorAsync(UtilTools.BuildPredicateFunc<UserIdentity>(),
                                                                                UtilTools.BuildSelectorFunc<UserIdentity>(),
                                                                                false), Times.Once());
-        _userIdentityRepository.Verify(r => r.PasswordSignInAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Once());
-        _validate.Verify(v => v.ValidationAsync(It.IsAny<UserIdentity>()), Times.Once());
-        _userIdentityRepository.Verify(r => r.ResetPasswordAsync(It.IsAny<UserIdentity>(), It.IsAny<string>()), Times.Once());
+        _userIdentityRepository.Verify(r => r.ChangePasswordAsync(It.IsAny<UserIdentity>(),
+                                                                  dtoChangePassword.OldPassword,
+                                                                  dtoChangePassword.NewPassword), Times.Once());
     }
 
     [Fact]
-    [Trait("Failed", "Invalid data")]
-    public async Task ChangePasswordAsync_InvalidData_ReturnFalse()
+    [Trait("Failed", "An error occurred while trying to persist the data")]
+    public async Task ChangePasswordAsync_AnErrorOccurredWhileTryingToPersistTheData_ReturnFalse()
     {
         CreateInvalidDataNotification();
         var dtoChangePassword = new UserIdentityChangePasswordRequest
         {
             UserIdentityId = Guid.NewGuid(),
             OldPassword = "@Test2022",
-            NewPassword = "@Newtest2023"
+            NewPassword = "@Test2023"
         };
 
         var accountIdentity = UserIdentityBuilderTest.NewObject().DomainObject();
@@ -59,8 +60,9 @@ public sealed class ChangePasswordAsyncMethodUnitTest : UserIdentityCommandServi
         _userIdentityRepository.Setup(r => r.FindByPredicateWithSelectorAsync(UtilTools.BuildPredicateFunc<UserIdentity>(),
                                                                               UtilTools.BuildSelectorFunc<UserIdentity>(),
                                                                               false)).ReturnsAsync(accountIdentity);
-        _userIdentityRepository.Setup(r => r.PasswordSignInAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(SignInResult.Success);
-        _validate.Setup(v => v.ValidationAsync(It.IsAny<UserIdentity>())).ReturnsAsync(_validationResponse);
+        _userIdentityRepository.Setup(r => r.ChangePasswordAsync(It.IsAny<UserIdentity>(),
+                                                                 dtoChangePassword.OldPassword,
+                                                                 dtoChangePassword.NewPassword)).ReturnsAsync(IdentityResult.Failed());
 
         var serviceResult = await _userIdentityCommandService.ChangePasswordAsync(dtoChangePassword);
 
@@ -68,9 +70,9 @@ public sealed class ChangePasswordAsyncMethodUnitTest : UserIdentityCommandServi
         _userIdentityRepository.Verify(r => r.FindByPredicateWithSelectorAsync(UtilTools.BuildPredicateFunc<UserIdentity>(),
                                                                                UtilTools.BuildSelectorFunc<UserIdentity>(),
                                                                                false), Times.Once());
-        _userIdentityRepository.Verify(r => r.PasswordSignInAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Once());
-        _validate.Verify(v => v.ValidationAsync(It.IsAny<UserIdentity>()), Times.Once());
-        _userIdentityRepository.Verify(r => r.ResetPasswordAsync(It.IsAny<UserIdentity>(), It.IsAny<string>()), Times.Never());
+        _userIdentityRepository.Verify(r => r.ChangePasswordAsync(It.IsAny<UserIdentity>(),
+                                                                  dtoChangePassword.OldPassword,
+                                                                  dtoChangePassword.NewPassword), Times.Once());
 
     }
 
@@ -82,7 +84,7 @@ public sealed class ChangePasswordAsyncMethodUnitTest : UserIdentityCommandServi
         {
             UserIdentityId = Guid.NewGuid(),
             OldPassword = "@Test2022",
-            NewPassword = "@Newtest2023"
+            NewPassword = "test2023"
         };
 
         var accountIdentity = UserIdentityBuilderTest.NewObject().DomainObject();
@@ -90,7 +92,6 @@ public sealed class ChangePasswordAsyncMethodUnitTest : UserIdentityCommandServi
         _userIdentityRepository.Setup(r => r.FindByPredicateWithSelectorAsync(UtilTools.BuildPredicateFunc<UserIdentity>(),
                                                                               UtilTools.BuildSelectorFunc<UserIdentity>(),
                                                                               false)).ReturnsAsync(accountIdentity);
-        _userIdentityRepository.Setup(r => r.PasswordSignInAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(SignInResult.Failed);
 
         var serviceResult = await _userIdentityCommandService.ChangePasswordAsync(dtoChangePassword);
 
@@ -98,9 +99,9 @@ public sealed class ChangePasswordAsyncMethodUnitTest : UserIdentityCommandServi
         _userIdentityRepository.Verify(r => r.FindByPredicateWithSelectorAsync(UtilTools.BuildPredicateFunc<UserIdentity>(),
                                                                                UtilTools.BuildSelectorFunc<UserIdentity>(),
                                                                                false), Times.Once());
-        _userIdentityRepository.Verify(r => r.PasswordSignInAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Once());
-        _validate.Verify(v => v.ValidationAsync(It.IsAny<UserIdentity>()), Times.Never());
-        _userIdentityRepository.Verify(r => r.ResetPasswordAsync(It.IsAny<UserIdentity>(), It.IsAny<string>()), Times.Never());
+        _userIdentityRepository.Verify(r => r.ChangePasswordAsync(It.IsAny<UserIdentity>(),
+                                                                  dtoChangePassword.OldPassword,
+                                                                  dtoChangePassword.NewPassword), Times.Never());
     }
 
     [Fact]
@@ -115,8 +116,8 @@ public sealed class ChangePasswordAsyncMethodUnitTest : UserIdentityCommandServi
         };
 
         _userIdentityRepository.Setup(r => r.FindByPredicateWithSelectorAsync(UtilTools.BuildPredicateFunc<UserIdentity>(),
-                                                                              UtilTools.BuildSelectorFunc<UserIdentity>(),
-                                                                              false));
+                                                                                      UtilTools.BuildSelectorFunc<UserIdentity>(),
+                                                                                      false));
 
         var serviceResult = await _userIdentityCommandService.ChangePasswordAsync(dtoChangePassword);
 
@@ -124,8 +125,8 @@ public sealed class ChangePasswordAsyncMethodUnitTest : UserIdentityCommandServi
         _userIdentityRepository.Verify(r => r.FindByPredicateWithSelectorAsync(UtilTools.BuildPredicateFunc<UserIdentity>(),
                                                                                UtilTools.BuildSelectorFunc<UserIdentity>(),
                                                                                false), Times.Once());
-        _userIdentityRepository.Verify(r => r.PasswordSignInAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Never());
-        _validate.Verify(v => v.ValidationAsync(It.IsAny<UserIdentity>()), Times.Never());
-        _userIdentityRepository.Verify(r => r.ResetPasswordAsync(It.IsAny<UserIdentity>(), It.IsAny<string>()), Times.Never());
+        _userIdentityRepository.Verify(r => r.ChangePasswordAsync(It.IsAny<UserIdentity>(),
+                                                                  dtoChangePassword.OldPassword,
+                                                                  dtoChangePassword.NewPassword), Times.Never());
     }
 }

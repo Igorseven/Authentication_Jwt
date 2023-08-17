@@ -24,9 +24,7 @@ public sealed class UserIdentityValidation : Validate<UserIdentity>
             : EMessage.Required.GetDescription().FormatTo("Login"));
 
         RuleFor(a => a.PasswordHash).Length(8, 20).Must(password => password.ValidatePassword())
-            .WithMessage(a => !string.IsNullOrWhiteSpace(a.PasswordHash)
-            ? EMessage.MoreExpected.GetDescription().FormatTo("Senha", "entre {MinLength} e {MaxLength}")
-            : EMessage.Required.GetDescription().FormatTo("Senha"));
+            .WithMessage("A senha não atende aos requisitos.");
 
     }
 }
