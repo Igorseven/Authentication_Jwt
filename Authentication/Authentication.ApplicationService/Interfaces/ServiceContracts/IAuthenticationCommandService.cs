@@ -4,6 +4,6 @@ using Authentication.ApplicationService.DataTransferObjects.Responses.Authentica
 namespace Authentication.ApplicationService.Interfaces.ServiceContracts;
 public interface IAuthenticationCommandService : IDisposable
 {
-    Task<AuthenticationLoginResponse> GenerateAccessTokenAsync(UserLogin userLogin);
+    Task<AuthenticationLoginResponse?> GenerateAccessTokenAsync(UserLogin userLogin);
     Task<AuthenticationLoginResponse?> GenerateRefreshTokenAsync(UpdateAccessToken updateAccessToken);
 }

@@ -3,6 +3,7 @@ using Authentication.ApplicationService.DataTransferObjects.Responses.Authentica
 using Authentication.ApplicationService.Interfaces.ServiceContracts;
 using Authentication.ApplicationService.NotificatioTrace;
 using Authentication.Domain.Entities;
+using Authentication.Domain.Enums;
 using Authentication.Domain.Interfaces.OthersContracts;
 using Authentication.Domain.Interfaces.RepositoryContracts;
 using Authentication.Domain.Providers;
@@ -37,17 +38,13 @@ public sealed class AuthenticationCommandService : IAuthenticationCommandService
 
     public void Dispose() => _refreshTokenRepository.Dispose();
 
-    public async Task<AuthenticationLoginResponse> GenerateAccessTokenAsync(UserLogin userLogin)
+    public async Task<AuthenticationLoginResponse?> GenerateAccessTokenAsync(UserLogin userLogin)
     {
         if (!await _userIdentityQueryService.CheckLoginAndPasswordAsyncAsync(userLogin))
         {
-            return new()
-            {
-                AccessToken = "",
-                RefreshToken = "",
-                Expiry = 0,
-                Message = "Login ou senha inválido."
-            };
+            _notification.CreateNotification(AuthenticationServiceTrace.GenerateRefreshTokenMethod, "Login ou senha inválido.");
+
+            return null;
         }
 
         await _refreshTokenRepository.DeleteAsync(userLogin.Login);

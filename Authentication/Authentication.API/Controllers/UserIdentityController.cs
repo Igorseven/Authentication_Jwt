@@ -1,4 +1,5 @@
 ﻿using Authentication.API.Extensions;
+using Authentication.API.Settings.RolesPolicy;
 using Authentication.ApplicationService.DataTransferObjects.Requests.UserIdentityRequest;
 using Authentication.ApplicationService.DataTransferObjects.Responses.UserIdentityResponse;
 using Authentication.ApplicationService.Interfaces.ServiceContracts;
@@ -38,6 +39,7 @@ public class UserIdentityController : ControllerBase
     public async Task<bool> UserChangePasswordAsync([FromBody] UserIdentityChangePasswordRequest accountIdentityChangePasswordRequest) =>
         await _userIdentityCommandService.ChangePasswordAsync(accountIdentityChangePasswordRequest);
 
+    [Authorize(Roles = $"{UsersPolicy.ClientRole}, {UsersPolicy.ManagerRole}")]
     [HttpGet("get_user_identity_data")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

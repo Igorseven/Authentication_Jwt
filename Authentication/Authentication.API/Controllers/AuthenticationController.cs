@@ -1,4 +1,5 @@
-﻿using Authentication.ApplicationService.DataTransferObjects.Requests.AuthenticationRequest;
+﻿using Authentication.API.Settings.RolesPolicy;
+using Authentication.ApplicationService.DataTransferObjects.Requests.AuthenticationRequest;
 using Authentication.ApplicationService.DataTransferObjects.Responses.AuthenticationResponse;
 using Authentication.ApplicationService.Interfaces.ServiceContracts;
 using Authentication.Domain.Handlers.NotificationHandler;
@@ -23,12 +24,15 @@ public class AuthenticationController : ControllerBase
     [HttpPost("generate_access_token")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<DomainNotification>))]
-    public async Task<AuthenticationLoginResponse> CreateAccessTokenAsync([FromBody] UserLogin userLogin) =>
+    public async Task<AuthenticationLoginResponse?> CreateAccessTokenAsync([FromBody] UserLogin userLogin) =>
         await _authenticationTokenCommandService.GenerateAccessTokenAsync(userLogin);
 
+
+    [Authorize(Roles = $"{UsersPolicy.ClientRole}, {UsersPolicy.ManagerRole}, {UsersPolicy.SysManageRole}")]
     [HttpPost("update_access_token")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<DomainNotification>))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<AuthenticationLoginResponse?> CreateRefreshTokenAsync([FromBody] UpdateAccessToken updateAccessToken) =>
         await _authenticationTokenCommandService.GenerateRefreshTokenAsync(updateAccessToken);
 }
