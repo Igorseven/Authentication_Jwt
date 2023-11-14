@@ -5,9 +5,9 @@ using Authentication.ApplicationService.Services.UserIdentityServices;
 
 namespace Authentication.API.Settings.Configurations.DependencyInjectionSettings;
 
-public static class ServiceDI
+public static class ServiceDi
 {
-    public static IServiceCollection AddServiceDI(this IServiceCollection services)
+    public static IServiceCollection AddServiceDi(this IServiceCollection services)
     {
         return services.AddScoped<IUserIdentityCommandService, UserIdentityCommandService>()
                        .AddScoped<IUserIdentityQueryService, UserIdentityQueryService>()

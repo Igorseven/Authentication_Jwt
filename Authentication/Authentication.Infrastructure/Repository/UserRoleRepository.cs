@@ -15,7 +15,7 @@ public sealed class UserRoleRepository : BaseRepository<UserRole>, IUserRoleRepo
 
     public async Task<IEnumerable<UserRole>> FindAllWithPredicateAsync(Expression<Func<UserRole, bool>> predicate, Func<IQueryable<UserRole>, IIncludableQueryable<UserRole, object>>? include = null)
     {
-        IQueryable<UserRole> query = _dbSetContext;
+        IQueryable<UserRole> query = DbSetContext;
 
         if (include is not null)
             query = include(query);
@@ -27,7 +27,7 @@ public sealed class UserRoleRepository : BaseRepository<UserRole>, IUserRoleRepo
 
     public async Task<UserRole?> FindByPredicateAsync(Expression<Func<UserRole, bool>> predicate, bool asNoTracking = false)
     {
-        IQueryable<UserRole> query = _dbSetContext;
+        IQueryable<UserRole> query = DbSetContext;
 
         if (asNoTracking)
             query = query.AsNoTracking();
@@ -37,7 +37,7 @@ public sealed class UserRoleRepository : BaseRepository<UserRole>, IUserRoleRepo
 
     public async Task<bool> SaveAsync(UserRole userRole)
     {
-        await _dbSetContext.AddAsync(userRole);
+        await DbSetContext.AddAsync(userRole);
 
         return await SaveInDatabaseAsync();
     }
@@ -46,7 +46,7 @@ public sealed class UserRoleRepository : BaseRepository<UserRole>, IUserRoleRepo
     {
         DetachedObject(userRole);
 
-        _dbSetContext.Remove(userRole);
+        DbSetContext.Remove(userRole);
 
         return await SaveInDatabaseAsync();
     }

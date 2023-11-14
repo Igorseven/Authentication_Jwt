@@ -17,21 +17,20 @@ public abstract class AuthenticationCommandServiceSetup
     protected readonly SymmetricSecurityKey _key;
     protected readonly AuthenticationCommandService _authenticationCommandService;
     protected readonly JwtTokenOptions _jwtTokenOptions;
-    protected readonly IOptions<JwtTokenOptions> _options;
-    protected const string _securityAlgorithm = SecurityAlgorithms.HmacSha256;
+    protected const string SecurityAlgorithm = SecurityAlgorithms.HmacSha256;
 
     public AuthenticationCommandServiceSetup()
     {
+        var options = Options.Create(GetJwtTokenOptions());
         _refreshTokenRepository = new();
         _notification = new();
         _userIdentityQueryService = new();
-        _options = Options.Create(GetJwtTokenOptions());
         _jwtTokenOptions = GetJwtTokenOptions();
         _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("_habKLEnMAUeb-ZXAiLllIiAr.dev"));
         _authenticationCommandService = new AuthenticationCommandService(_refreshTokenRepository.Object,
                                                                          _userIdentityQueryService.Object,
                                                                          _notification.Object,
-                                                                         _options);
+                                                                         options);
     }
 
 

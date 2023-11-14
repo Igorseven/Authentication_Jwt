@@ -2,7 +2,6 @@
 using Authentication.ApplicationService.Interfaces.MapperContracts;
 using Authentication.ApplicationService.Interfaces.ServiceContracts;
 using Authentication.ApplicationService.NotificatioTrace;
-using Authentication.ApplicationService.Services.Base;
 using Authentication.Domain.Entities;
 using Authentication.Domain.Enums;
 using Authentication.Domain.Extensions;
@@ -48,7 +47,7 @@ public sealed class RoleCommandService : BaseService<Role>, IRoleCommandService
 
     public async Task<bool> DeleteRoleAsync(Guid roleId)
     {
-        var role = await _roleRepository.FindByPredicateWithSelectorAsync(r => r.Id == roleId, QueryProjectionForDelete(), false);
+        var role = await _roleRepository.FindByPredicateWithSelectorAsync(r => r.Id == roleId, QueryProjectionForDelete());
 
         if (role is null)
             return _notification.CreateNotification(RoleServicesTrace.DeleteRoleMethod, EMessage.NotFound.GetDescription().FormatTo("Role"));

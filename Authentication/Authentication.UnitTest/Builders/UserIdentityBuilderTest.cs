@@ -8,8 +8,8 @@ public sealed class UserIdentityBuilderTest
     private EUserType _userType = EUserType.Client;
     private EUserStatus _userStatus = EUserStatus.Inconsistent;
     private string _userName = "usertest@test.com";
-    private string? _email = null;
-    private string? _cellPhone = null;
+    private string? _email;
+    private string? _cellPhone;
     private string _password = "@Tester2023";
 
     public static UserIdentityBuilderTest NewObject() => new();

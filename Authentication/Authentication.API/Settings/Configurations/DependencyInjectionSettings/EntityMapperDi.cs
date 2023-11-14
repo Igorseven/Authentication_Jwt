@@ -3,9 +3,9 @@ using Authentication.ApplicationService.Mappers;
 
 namespace Authentication.API.Settings.Configurations.DependencyInjectionSettings;
 
-public static class EntityMapperDI
+public static class EntityMapperDi
 {
-    public static IServiceCollection AddEntityMapperDI(this IServiceCollection services)
+    public static IServiceCollection AddEntityMapperDi(this IServiceCollection services)
     {
         return services.AddScoped<IUserIdentityMapper, UserIdentityMapper>()
                        .AddScoped<IRoleMapper, RoleMapper>();

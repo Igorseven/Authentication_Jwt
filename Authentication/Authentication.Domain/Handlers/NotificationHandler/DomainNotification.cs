@@ -12,9 +12,6 @@ public sealed class DomainNotification
 
     public static IEnumerable<DomainNotification> CreateNotifications(Dictionary<string, string> notifications)
     {
-        foreach (var notification in notifications)
-        {
-            yield return new DomainNotification(notification.Key, notification.Value);
-        }
+        return notifications.Select(notification => new DomainNotification(notification.Key, notification.Value));
     }
 }

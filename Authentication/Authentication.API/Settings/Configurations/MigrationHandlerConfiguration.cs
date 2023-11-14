@@ -7,18 +7,12 @@ public static class MigrationHandlerConfiguration
 {
     public static WebApplication MigrateDatabase(this WebApplication webApp)
     {
-        using (var scope = webApp.Services.CreateScope())
-        {
-            using var appContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
-            try
-            {
-                appContext.Database.Migrate();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        using var scope = webApp.Services.CreateScope();
+        
+        using var appContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
+        
+        appContext.Database.Migrate();
+
         return webApp;
     }
 }

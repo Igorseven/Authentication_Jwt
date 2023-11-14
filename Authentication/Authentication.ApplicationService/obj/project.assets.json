@@ -4346,23 +4346,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Igor Seven\\.nuget\\packages\\": {},
+    "C:\\Users\\igors\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Igor Seven\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.ApplicationService\\Authentication.ApplicationService.csproj",
+      "projectUniqueName": "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.ApplicationService\\Authentication.ApplicationService.csproj",
       "projectName": "Authentication.ApplicationService",
-      "projectPath": "C:\\Users\\Igor Seven\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.ApplicationService\\Authentication.ApplicationService.csproj",
-      "packagesPath": "C:\\Users\\Igor Seven\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Igor Seven\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.ApplicationService\\obj\\",
+      "projectPath": "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.ApplicationService\\Authentication.ApplicationService.csproj",
+      "packagesPath": "C:\\Users\\igors\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.ApplicationService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Igor Seven\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\igors\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4377,8 +4377,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\Igor Seven\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.Infrastructure\\Authentication.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\Igor Seven\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.Infrastructure\\Authentication.Infrastructure.csproj"
+            "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.Infrastructure\\Authentication.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.Infrastructure\\Authentication.Infrastructure.csproj"
             }
           }
         }
@@ -4408,7 +4408,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
       }
     }
   }

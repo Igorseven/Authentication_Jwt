@@ -2,7 +2,6 @@
 using Authentication.ApplicationService.Interfaces.MapperContracts;
 using Authentication.ApplicationService.Interfaces.ServiceContracts;
 using Authentication.ApplicationService.NotificatioTrace;
-using Authentication.ApplicationService.Services.Base;
 using Authentication.Domain.Entities;
 using Authentication.Domain.Enums;
 using Authentication.Domain.Extensions;
@@ -34,7 +33,7 @@ public class UserIdentityCommandService : BaseService<UserIdentity>, IUserIdenti
 
     public async Task<bool> CreateIdentityAccountAsync(UserIdentityRegisterRequest accountIdentityRegisterRequest)
     {
-        if (await _userIdentityRepository.HaveInTheDatabaseAsync(u => u.NormalizedUserName == accountIdentityRegisterRequest.Login!.ToUpper()))
+        if (await _userIdentityRepository.HaveInTheDatabaseAsync(u => u.NormalizedUserName == accountIdentityRegisterRequest.Login.ToUpper()))
             return _notification.CreateNotification(UserIdentityServiceTrace.CreateIdentityAccountMethod, EMessage.Exist.GetDescription().FormatTo("Login"));
 
         var accountIdentity = _userIdentityMapper.DtoUserIdentityRegisterRequestToDomain(accountIdentityRegisterRequest);
@@ -52,8 +51,7 @@ public class UserIdentityCommandService : BaseService<UserIdentity>, IUserIdenti
     public async Task<bool> ChangePasswordAsync(UserIdentityChangePasswordRequest accountIdentityChangePasswordRequest)
     {
         var userIdentity = await _userIdentityRepository.FindByPredicateWithSelectorAsync(u => u.Id == accountIdentityChangePasswordRequest.UserIdentityId,
-                                                                                          QueryProjectionForChangePassword(),
-                                                                                          false);
+                                                                                          QueryProjectionForChangePassword());
 
         if (userIdentity is null)
             return _notification.CreateNotification(UserIdentityServiceTrace.ChangePassword, EMessage.NotFound.GetDescription().FormatTo("User"));
@@ -71,7 +69,7 @@ public class UserIdentityCommandService : BaseService<UserIdentity>, IUserIdenti
         return updateResult.Succeeded;
     }
 
-    private static Expression<Func<UserIdentity, UserIdentity>>? QueryProjectionForChangePassword() =>
+    private static Expression<Func<UserIdentity, UserIdentity>> QueryProjectionForChangePassword() =>
          u => new UserIdentity
          {
              Id = u.Id,

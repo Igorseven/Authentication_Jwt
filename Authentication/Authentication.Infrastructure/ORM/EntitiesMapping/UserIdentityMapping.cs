@@ -19,10 +19,10 @@ public sealed class UserIdentityMapping : BaseMapping, IEntityTypeConfiguration<
 
         builder.Property(a => a.Id).HasColumnName("id_accountIdentity");
 
-        builder.Property(c => c.UserStatus).HasColumnName("user_status").IsRequired(true);
+        builder.Property(c => c.UserStatus).HasColumnName("user_status").IsRequired();
 
         builder.Property(c => c.UserType).HasColumnType("tinyint")
-               .HasColumnName("user_type").IsRequired(true);
+               .HasColumnName("user_type").IsRequired();
 
         builder.Property(a => a.UserName).HasColumnName("login");
 

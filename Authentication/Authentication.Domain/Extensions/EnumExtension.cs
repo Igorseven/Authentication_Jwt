@@ -20,10 +20,10 @@ public static class EnumExtension
         if (!type.GetTypeInfo().IsEnum)
             throw new ArgumentException();
 
-        var field = type.GetFields()
-                        .SelectMany(f => f.GetCustomAttributes(typeof(DescriptionAttribute), false), (f, a) => new { Field = f, Att = a })
-                        .Where(a => ((DescriptionAttribute)a.Att).Description == description)
-                        .SingleOrDefault();
+        var field = type
+            .GetFields()
+            .SelectMany(f => f.GetCustomAttributes(typeof(DescriptionAttribute), false), (f, a) => new { Field = f, Att = a })
+            .SingleOrDefault(a => ((DescriptionAttribute)a.Att).Description == description);
 
         return field == null ? default : (T)field.Field.GetRawConstantValue()!;
     }

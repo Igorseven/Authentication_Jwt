@@ -19,10 +19,10 @@ public sealed class RefreshTokenMapping : BaseMapping, IEntityTypeConfiguration<
 
         builder.Property(r => r.RefreshTokenId).HasColumnName("id_refreshToken");
 
-        builder.Property(r => r.UserName).HasColumnType("varchar(150)").IsUnicode(true)
-               .HasColumnName("user_name").IsRequired(true);
+        builder.Property(r => r.UserName).HasColumnType("varchar(150)").IsUnicode()
+               .HasColumnName("user_name").IsRequired();
 
-        builder.Property(r => r.Token).HasColumnType("nvarchar(Max)").IsUnicode(true)
-               .HasColumnName("token").IsRequired(true);
+        builder.Property(r => r.Token).HasColumnType("nvarchar(Max)").IsUnicode()
+               .HasColumnName("token").IsRequired();
     }
 }

@@ -1,18 +1,17 @@
-﻿using Authentication.ApplicationService.DataTransferObjects.Requests.AuthenticationRequest;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
+using Authentication.ApplicationService.DataTransferObjects.Requests.AuthenticationRequest;
 using Authentication.ApplicationService.DataTransferObjects.Responses.AuthenticationResponse;
 using Authentication.ApplicationService.Interfaces.ServiceContracts;
 using Authentication.ApplicationService.NotificatioTrace;
 using Authentication.Domain.Entities;
-using Authentication.Domain.Enums;
 using Authentication.Domain.Interfaces.OthersContracts;
 using Authentication.Domain.Interfaces.RepositoryContracts;
 using Authentication.Domain.Providers;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace Authentication.ApplicationService.Services.AuthenticationServices;
 public sealed class AuthenticationCommandService : IAuthenticationCommandService
@@ -22,7 +21,7 @@ public sealed class AuthenticationCommandService : IAuthenticationCommandService
     private readonly IUserIdentityQueryService _userIdentityQueryService;
     private readonly JwtTokenOptions _jwtTokenOptions;
     private readonly SymmetricSecurityKey _key;
-    private const string _securityAlgorithm = SecurityAlgorithms.HmacSha256;
+    private const string SecurityAlgorithm = SecurityAlgorithms.HmacSha256;
 
     public AuthenticationCommandService(IRefreshTokenRepository refreshTokenRepository,
                                         IUserIdentityQueryService userIdentityQueryService,
@@ -42,7 +41,7 @@ public sealed class AuthenticationCommandService : IAuthenticationCommandService
     {
         if (!await _userIdentityQueryService.CheckLoginAndPasswordAsyncAsync(userLogin))
         {
-            _notification.CreateNotification(AuthenticationServiceTrace.GenerateRefreshTokenMethod, "Login ou senha inválido.");
+            _notification.CreateNotification(AuthenticationServiceTrace.GenerateAccessTokenMethod, "Login ou senha inválido.");
 
             return null;
         }
@@ -50,14 +49,13 @@ public sealed class AuthenticationCommandService : IAuthenticationCommandService
         await _refreshTokenRepository.DeleteAsync(userLogin.Login);
 
         var jwtToken = await GenerateJwtTokenAsync(userLogin.Login);
-        var newRefreshToken = await GenerateRefreshTokenAsync(userLogin.Login!);
+        var newRefreshToken = await GenerateRefreshTokenAsync(userLogin.Login);
 
         return new()
         {
             AccessToken = jwtToken,
             RefreshToken = newRefreshToken,
-            Expiry = _jwtTokenOptions.DurationInMinutes,
-            Message = "autenticado com sucesso."
+            Expiry = _jwtTokenOptions.DurationInMinutes
         };
     }
 
@@ -88,14 +86,13 @@ public sealed class AuthenticationCommandService : IAuthenticationCommandService
         {
             AccessToken = jwtToken,
             RefreshToken = newRefreshToken,
-            Expiry = _jwtTokenOptions.DurationInMinutes,
-            Message = "autenticado com sucesso."
+            Expiry = _jwtTokenOptions.DurationInMinutes
         };
     }
 
     private async Task<string> GenerateJwtTokenAsync(string userName)
     {
-        var claims = await _userIdentityQueryService.GetUseClaimsAsync(userName!);
+        var claims = await _userIdentityQueryService.GetUseClaimsAsync(userName);
 
         var tokenDescription = new SecurityTokenDescriptor
         {
@@ -103,7 +100,7 @@ public sealed class AuthenticationCommandService : IAuthenticationCommandService
             Expires = DateTime.UtcNow.AddMinutes(_jwtTokenOptions.DurationInMinutes),
             Issuer = _jwtTokenOptions.Issuer,
             Audience = _jwtTokenOptions.Audience,
-            SigningCredentials = new SigningCredentials(_key, _securityAlgorithm)
+            SigningCredentials = new SigningCredentials(_key, SecurityAlgorithm)
         };
 
         var tokeHandler = new JwtSecurityTokenHandler();
@@ -135,8 +132,8 @@ public sealed class AuthenticationCommandService : IAuthenticationCommandService
         new()
         {
             AccessToken = accessToken,
-            SecurityAlgorithm = _securityAlgorithm,
-            TokenValidationParameters = new()
+            SecurityAlgorithm = SecurityAlgorithm,
+            TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
                 ValidateIssuer = true,

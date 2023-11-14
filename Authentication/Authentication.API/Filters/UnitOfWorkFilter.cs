@@ -18,11 +18,15 @@ public sealed class UnitOfWorkFilter : ActionFilterAttribute
     public override void OnActionExecuted(ActionExecutedContext context)
     {
         if (ExternalMethodExtension.IsMethodGet(context)) return;
+        
+        var routeData = context.HttpContext.GetRouteData();
+        var routeName = routeData.Values["action"]?.ToString();
+        const string authRouteName = "CreateAccessToken";
 
-        if (context.Exception is null && context.ModelState.IsValid && !_notification.HasNotification())
-            _unitOfWork.CommitTransaction();
+        if (routeName is not null && routeName.Equals(authRouteName, StringComparison.InvariantCulture))
+            LonginMethod(context);
         else
-            _unitOfWork.RolbackTransaction();
+            OthersMethods(context);
 
         base.OnActionExecuted(context);
     }
@@ -34,6 +38,22 @@ public sealed class UnitOfWorkFilter : ActionFilterAttribute
         _unitOfWork.BeginTransaction();
 
         base.OnActionExecuting(context);
+    }
+
+    private void LonginMethod(ActionExecutedContext context)
+    {
+        if (context.Exception is null)
+            _unitOfWork.CommitTransaction();
+        else
+            _unitOfWork.RollbackTransaction();
+    }
+
+    private void OthersMethods(ActionExecutedContext context)
+    {
+        if (context.Exception is null && context.ModelState.IsValid && !_notification.HasNotification())
+            _unitOfWork.CommitTransaction();
+        else
+            _unitOfWork.RollbackTransaction();
     }
 }
 

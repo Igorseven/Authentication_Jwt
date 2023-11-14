@@ -3,9 +3,9 @@ using Authentication.Infrastructure.Repository;
 
 namespace Authentication.API.Settings.Configurations.DependencyInjectionSettings;
 
-public static class RepositoryDI
+public static class RepositoryDi
 {
-    public static IServiceCollection AddRepositoryDI(this IServiceCollection services)
+    public static IServiceCollection AddRepositoryDi(this IServiceCollection services)
     {
         return services.AddScoped<IUserIdentityRepository, UserIdentityRepository>()
                         .AddScoped<IRoleRepository, RoleRepository>()

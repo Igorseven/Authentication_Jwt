@@ -7,9 +7,9 @@ public sealed class UnitOfWork : IUnitOfWork
 {
     private readonly DatabaseFacade _databaseFacade;
 
-    public UnitOfWork(ApplicationContext dbcontext)
+    public UnitOfWork(ApplicationContext context)
     {
-        _databaseFacade = dbcontext.Database;
+        _databaseFacade = context.Database;
     }
 
     public void CommitTransaction()
@@ -20,12 +20,12 @@ public sealed class UnitOfWork : IUnitOfWork
         }
         catch
         {
-            RolbackTransaction();
+            RollbackTransaction();
             throw;
         }
     }
 
-    public void RolbackTransaction() => _databaseFacade.RollbackTransaction();
+    public void RollbackTransaction() => _databaseFacade.RollbackTransaction();
 
     public void BeginTransaction() => _databaseFacade.BeginTransaction();
 }

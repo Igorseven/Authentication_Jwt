@@ -6,15 +6,17 @@ using System.Text;
 
 namespace Authentication.API.Settings.Configurations.DependencyInjectionSettings;
 
-public static class IdentityDI
+public static class IdentityDi
 {
-    public static IServiceCollection AddIdentityDI(this IServiceCollection services)
+    public static IServiceCollection AddIdentityDi(this IServiceCollection services)
     {
 
         services.AddIdentityCore<UserIdentity>(options =>
         {
             options.SignIn.RequireConfirmedAccount = false;
             options.SignIn.RequireConfirmedPhoneNumber = false;
+            options.Lockout.MaxFailedAccessAttempts = 3;
+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
             options.User.AllowedUserNameCharacters = IdentityExtension.GetAllWritableCharacters(Encoding.UTF8);
             options.Password.RequireDigit = false;
             options.Password.RequireNonAlphanumeric = false;

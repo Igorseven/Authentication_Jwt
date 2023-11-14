@@ -4,21 +4,25 @@ using Microsoft.EntityFrameworkCore;
 namespace Authentication.Infrastructure.Repository.Base;
 public abstract class BaseRepository<T> : IDisposable where T : class
 {
-    protected readonly ApplicationContext _context;
-    protected DbSet<T> _dbSetContext => _context.Set<T>();
+    private readonly ApplicationContext _context;
+    protected DbSet<T> DbSetContext => _context.Set<T>();
 
-    public BaseRepository(ApplicationContext context)
+    protected BaseRepository(ApplicationContext context)
     {
         _context = context;
     }
-    public void Dispose() => _context.Dispose();
+    public void Dispose()
+    {
+        _context.Dispose();
+        GC.SuppressFinalize(this);
+    }
 
     protected async Task<bool> SaveInDatabaseAsync() => await _context.SaveChangesAsync() > 0;
 
     protected void DetachedObject(T entity)
     {
         if (_context.Entry(entity).State == EntityState.Detached)
-            _dbSetContext.Attach(entity);
+            DbSetContext.Attach(entity);
     }
 
 }

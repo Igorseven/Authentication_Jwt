@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Moq;
 
 
-namespace Authentication.UnitTest.Services.AccountIdentityCommandServiceUnitTest;
+namespace Authentication.UnitTest.Services.UserIdentityCommandServiceUnitTest;
 public sealed class ChangePasswordAsyncMethodUnitTest : UserIdentityCommandServiceSetup
 {
 

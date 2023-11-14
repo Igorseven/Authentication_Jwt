@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Authentication.API.Settings.Configurations.DependencyInjectionSettings;
 
-public static class AuthenticationDI
+public static class AuthenticationDi
 {
-    public static IServiceCollection AddAuthenticationDI(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddAuthenticationDi(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddAuthentication(config =>
         {

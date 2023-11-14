@@ -1,6 +1,7 @@
 using Authentication.API.Settings;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
+using Authentication.API.Settings.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 IConfiguration configuration = builder.Configuration;
@@ -30,5 +31,5 @@ app.UseCors("DfPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-//app.MigrateDatabase();
+app.MigrateDatabase();
 app.Run();

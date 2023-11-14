@@ -10,3 +10,15 @@ C:\Users\Igor Seven\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Aut
 C:\Users\Igor Seven\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\obj\Debug\net7.0\refint\Authentication.Domain.dll
 C:\Users\Igor Seven\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\obj\Debug\net7.0\Authentication.Domain.pdb
 C:\Users\Igor Seven\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\obj\Debug\net7.0\ref\Authentication.Domain.dll
+C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\bin\Debug\net7.0\Authentication.Domain.deps.json
+C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\bin\Debug\net7.0\Authentication.Domain.dll
+C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\bin\Debug\net7.0\Authentication.Domain.pdb
+C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\obj\Debug\net7.0\Authentication.Domain.csproj.AssemblyReference.cache
+C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\obj\Debug\net7.0\Authentication.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\obj\Debug\net7.0\Authentication.Domain.AssemblyInfoInputs.cache
+C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\obj\Debug\net7.0\Authentication.Domain.AssemblyInfo.cs
+C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\obj\Debug\net7.0\Authentication.Domain.csproj.CoreCompileInputs.cache
+C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\obj\Debug\net7.0\Authentication.Domain.dll
+C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\obj\Debug\net7.0\refint\Authentication.Domain.dll
+C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\obj\Debug\net7.0\Authentication.Domain.pdb
+C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\obj\Debug\net7.0\ref\Authentication.Domain.dll

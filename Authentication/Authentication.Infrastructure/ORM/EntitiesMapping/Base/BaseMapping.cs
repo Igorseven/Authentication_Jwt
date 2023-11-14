@@ -1,12 +1,12 @@
 ﻿namespace Authentication.Infrastructure.ORM.EntitiesMapping.Base;
 public class BaseMapping
 {
-    protected string Schema { get; set; }
+    protected string Schema { get; }
     private const string SchemaDefault = "Auth";
 
-    public BaseMapping() =>
+    protected BaseMapping() =>
         Schema = SchemaDefault;
 
-    public BaseMapping(string schema) =>
+    protected BaseMapping(string schema) =>
         Schema = schema;
 }

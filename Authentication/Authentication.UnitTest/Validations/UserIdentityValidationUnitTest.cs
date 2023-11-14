@@ -4,7 +4,7 @@ using Authentication.UnitTest.Builders;
 using Bogus.Extensions;
 
 
-namespace RegistrationManagement.UnitTest.Validations;
+namespace Authentication.UnitTest.Validations;
 public sealed class UserIdentityValidationUnitTest
 {
     private readonly UserIdentityValidation _validation;

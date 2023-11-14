@@ -1,7 +1,7 @@
 ﻿using Authentication.Domain.Handlers.NotificationHandler;
 using Authentication.UnitTest.NotificationsUnitTest.Base;
 
-namespace RegistrationManagement.UnitTest.Handlers.NotificationsUnitTest;
+namespace Authentication.UnitTest.NotificationsUnitTest;
 public sealed class GetNotificationsMethodUnitTest : NotificationHandlerSetup
 {
 

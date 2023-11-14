@@ -33,12 +33,10 @@ public sealed class UserIdentityQueryService : IUserIdentityQueryService
     public async Task<UserIdentityDataResponse?> FindUserIdentityDataAsync(string userName)
     {
         var userIdentity = await _userIdentityRepository.FindByPredicateWithSelectorAsync(u => u.NormalizedUserName == userName.ToUpper(),
-                                                                                             QueryProjectionUserIdentityData(),
+                                                                                            QueryProjectionUserIdentityData(),
                                                                                              true);
 
-        if (userIdentity is null) return null;
-
-        return _userIdentityMapper.DomainToDtoUserIdentityData(userIdentity);
+        return userIdentity is null ? null : _userIdentityMapper.DomainToDtoUserIdentityData(userIdentity);
     }
 
     public async Task<UserIdentity?> FindByUserNameAsync(string userName) =>

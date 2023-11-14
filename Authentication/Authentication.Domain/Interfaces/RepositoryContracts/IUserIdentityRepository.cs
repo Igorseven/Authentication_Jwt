@@ -10,6 +10,7 @@ public interface IUserIdentityRepository : IDisposable
     Task<IdentityResult> UpdateAsync(UserIdentity accountIdentity);
     Task<SignInResult> PasswordSignInAsync(string login, string password);
     Task<IdentityResult> ChangePasswordAsync(UserIdentity entity, string currentPassword, string newPassword);
+    Task UserSignOutAsync();
     Task<IList<string>> FindAllRolesAsync(UserIdentity accountIdentity);
     Task<bool> HaveInTheDatabaseAsync(Expression<Func<UserIdentity, bool>> where);
     Task<UserIdentity?> FindByPredicateWithSelectorAsync(Expression<Func<UserIdentity, bool>> predicate,

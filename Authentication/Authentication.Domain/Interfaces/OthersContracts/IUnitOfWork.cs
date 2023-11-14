@@ -2,6 +2,6 @@
 public interface IUnitOfWork
 {
     void CommitTransaction();
-    void RolbackTransaction();
+    void RollbackTransaction();
     void BeginTransaction();
 }

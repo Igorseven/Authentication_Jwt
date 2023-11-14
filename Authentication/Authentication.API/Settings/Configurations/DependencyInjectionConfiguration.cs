@@ -29,11 +29,11 @@ public static class DependencyInjectionConfiguration
 
 
         services.AddValidationDI()
-                .AddRepositoryDI()
-                .AddServiceDI()
-                .AddEntityMapperDI()
-                .AddIdentityDI()
-                .AddAuthenticationDI(configuration);
+                .AddRepositoryDi()
+                .AddServiceDi()
+                .AddEntityMapperDi()
+                .AddIdentityDi()
+                .AddAuthenticationDi(configuration);
 
         return services;
     }

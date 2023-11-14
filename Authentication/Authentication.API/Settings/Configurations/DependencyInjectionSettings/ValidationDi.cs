@@ -4,7 +4,7 @@ using Authentication.Domain.Interfaces.OthersContracts;
 
 namespace Authentication.API.Settings.Configurations.DependencyInjectionSettings;
 
-public static class ValidationDI
+public static class ValidationDi
 {
     public static IServiceCollection AddValidationDI(this IServiceCollection services)
     {

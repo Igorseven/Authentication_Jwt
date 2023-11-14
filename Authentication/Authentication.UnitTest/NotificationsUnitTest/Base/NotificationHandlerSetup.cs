@@ -3,10 +3,6 @@
 namespace Authentication.UnitTest.NotificationsUnitTest.Base;
 public abstract class NotificationHandlerSetup
 {
-    protected readonly NotificationHandler _notificationHandler;
-
-    public NotificationHandlerSetup()
-    {
-        _notificationHandler = new();
-    }
+    protected readonly NotificationHandler _notificationHandler = new();
+    
 }

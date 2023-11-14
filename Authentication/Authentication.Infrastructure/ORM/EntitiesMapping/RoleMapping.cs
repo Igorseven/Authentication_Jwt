@@ -19,10 +19,10 @@ public sealed class RoleMapping : BaseMapping, IEntityTypeConfiguration<Role>
 
         builder.Property(r => r.Id).HasColumnName("id_role");
 
-        builder.Property(r => r.Name).HasColumnType("varchar(250)").IsUnicode(true)
-               .HasColumnName("name").IsRequired(true);
+        builder.Property(r => r.Name).HasColumnType("varchar(250)").IsUnicode()
+               .HasColumnName("name").IsRequired();
 
-        builder.Property(r => r.NormalizedName).HasColumnType("varchar(250)").IsUnicode(true)
+        builder.Property(r => r.NormalizedName).HasColumnType("varchar(250)").IsUnicode()
                .HasColumnName("normalized_name");
 
         builder.Property(r => r.ConcurrencyStamp).HasColumnName("concurrency_stamp");

@@ -8,7 +8,7 @@ using System.Security.Claims;
 using System.Text;
 
 namespace Authentication.UnitTest.TestTools;
-public sealed class UtilTools
+public static class UtilTools
 {
     public static IFormFile BuildIFormFile(string extension = "pdf")
     {

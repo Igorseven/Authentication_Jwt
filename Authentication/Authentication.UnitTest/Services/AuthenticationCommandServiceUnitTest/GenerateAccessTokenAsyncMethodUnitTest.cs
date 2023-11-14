@@ -5,29 +5,12 @@ using Authentication.UnitTest.Services.AuthenticationCommandServiceUnitTest.Base
 using Moq;
 using System.Security.Claims;
 
-namespace RegistrationManagement.UnitTest.Services.AuthenticationCommandServiceUnitTest;
+namespace Authentication.UnitTest.Services.AuthenticationCommandServiceUnitTest;
 public sealed class GenerateAccessTokenAsyncMethodUnitTest : AuthenticationCommandServiceSetup
 {
-
-    public static IEnumerable<object[]> AccountIdentyDomainObject()
-    {
-        yield return new object[]
-        {
-            new UserIdentity
-            {
-                Id = Guid.NewGuid(),
-                UserName = "login@test.com",
-                PasswordHash = "@Password2023",
-                UserStatus = EUserStatus.Active
-            }
-        };
-    }
-
-
-    [Theory]
+    [Fact]
     [Trait("Success", "Generate access token")]
-    [MemberData(nameof(AccountIdentyDomainObject))]
-    public async Task GenerateAccessTokenAsync_GenerateAccessToken_ReturnAuthenticationResponse(UserIdentity userIdentity)
+    public async Task GenerateAccessTokenAsync_GenerateAccessToken_ReturnAuthenticationResponse()
     {
         UserLogin userLogin = new()
         {

@@ -21,13 +21,13 @@ public class UserIdentityRepository : BaseRepository<UserIdentity>, IUserIdentit
         _signInManager = signInManager;
     }
 
-    public async Task<bool> HaveInTheDatabaseAsync(Expression<Func<UserIdentity, bool>> where) => await _dbSetContext.AnyAsync(where);
+    public async Task<bool> HaveInTheDatabaseAsync(Expression<Func<UserIdentity, bool>> where) => await DbSetContext.AnyAsync(where);
 
     public async Task<UserIdentity?> FindByPredicateWithSelectorAsync(Expression<Func<UserIdentity, bool>> predicate,
                                                                       Expression<Func<UserIdentity, UserIdentity>>? selector = null,
                                                                       bool asNoTracking = false)
     {
-        IQueryable<UserIdentity> query = _dbSetContext;
+        IQueryable<UserIdentity> query = DbSetContext;
 
         if (asNoTracking)
             query = query.AsNoTracking();
@@ -56,9 +56,10 @@ public class UserIdentityRepository : BaseRepository<UserIdentity>, IUserIdentit
 
         return await _userManager.ChangePasswordAsync(entity, currentPassword, newPassword);
     }
-        
 
     public async Task<SignInResult> PasswordSignInAsync(string login, string password) =>
-        await _signInManager.PasswordSignInAsync(login, password, false, false);
+        await _signInManager.PasswordSignInAsync(login, password, false, true);
+
+    public async Task UserSignOutAsync() => await _signInManager.SignOutAsync();
 }
 
