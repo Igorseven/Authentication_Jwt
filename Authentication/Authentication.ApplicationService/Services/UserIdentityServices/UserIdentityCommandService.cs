@@ -33,8 +33,12 @@ public class UserIdentityCommandService : BaseService<UserIdentity>, IUserIdenti
 
     public async Task<bool> CreateIdentityAccountAsync(UserIdentityRegisterRequest accountIdentityRegisterRequest)
     {
-        if (await _userIdentityRepository.HaveInTheDatabaseAsync(u => u.NormalizedUserName == accountIdentityRegisterRequest.Login.ToUpper()))
-            return _notification.CreateNotification(UserIdentityServiceTrace.CreateIdentityAccountMethod, EMessage.Exist.GetDescription().FormatTo("Login"));
+        if (await _userIdentityRepository.HaveInTheDatabaseAsync(
+                u => u.NormalizedUserName == accountIdentityRegisterRequest.Login.ToUpper()))
+             return _notification.CreateNotification(UserIdentityServiceTrace.CreateIdentityAccountMethod, 
+                EMessage.Exist.GetDescription().FormatTo("Login"));
+
+
 
         var accountIdentity = _userIdentityMapper.DtoUserIdentityRegisterRequestToDomain(accountIdentityRegisterRequest);
 

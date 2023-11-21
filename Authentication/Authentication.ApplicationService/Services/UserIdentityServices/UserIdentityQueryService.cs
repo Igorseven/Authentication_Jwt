@@ -66,7 +66,10 @@ public sealed class UserIdentityQueryService : IUserIdentityQueryService
 
     public async Task<List<Claim>> GetUseClaimsAsync(string userName)
     {
-        var accountIdentity = await _userIdentityRepository.FindByPredicateWithSelectorAsync(u => u.NormalizedUserName == userName.ToUpper(), null, true);
+        var accountIdentity = await _userIdentityRepository.FindByPredicateWithSelectorAsync(
+            u => u.NormalizedUserName == userName.ToUpper(),
+            null, true);
+        
         var userRoles = await _userIdentityRepository.FindAllRolesAsync(accountIdentity!);
 
         var claims = DefaultClaims(accountIdentity!);

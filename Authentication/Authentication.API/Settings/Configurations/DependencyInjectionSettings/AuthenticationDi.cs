@@ -10,11 +10,7 @@ public static class AuthenticationDi
 {
     public static IServiceCollection AddAuthenticationDi(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddAuthentication(config =>
-        {
-            config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
        .AddJwtBearer(config =>
        {
            config.RequireHttpsMetadata = false;

@@ -32,7 +32,7 @@ public class UserIdentityController : ControllerBase
     public async Task<bool> UserRegisterAsync([FromBody] UserIdentityRegisterRequest accountIdentityRegisterRequest) =>
         await _userIdentityCommandService.CreateIdentityAccountAsync(accountIdentityRegisterRequest);
 
-    [HttpPost("user_identity_change_password")]
+    [HttpPut("user_identity_change_password")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<DomainNotification>))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

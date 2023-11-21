@@ -1,0 +1,6 @@
+{
+  "Authentication.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.API",
+  "Authentication.ApplicationService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.ApplicationService",
+  "Authentication.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.Domain",
+  "Authentication.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.Infrastructure"
+}
