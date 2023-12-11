@@ -22,3 +22,4 @@ C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authenti
 C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\obj\Debug\net7.0\refint\Authentication.Domain.dll
 C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\obj\Debug\net7.0\Authentication.Domain.pdb
 C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\obj\Debug\net7.0\ref\Authentication.Domain.dll
+C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Domain\obj\Debug\net7.0\Authentication.Domain.sourcelink.json

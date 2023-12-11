@@ -1,6 +1,7 @@
 using Authentication.API.Settings;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
+using Authentication.API.Middleware;
 using Authentication.API.Settings.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +28,7 @@ app.UseRequestLocalization(new RequestLocalizationOptions
 
 
 app.UseHttpsRedirection();
+app.UseMiddleware<GlobalNotificationHandlingMiddleware>();
 app.UseCors("DfPolicy");
 app.UseAuthentication();
 app.UseAuthorization();

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Xcl8/MH4w4wO31JyqPxsnqQ1TlMUJiNAw2dDgCIJ9bLfOLwYjdVBB3ApMHNElO7W7mRurc8NmzVJJmqeFSWfnA==",
+  "dgSpecHash": "3lMzEFsac4MW7ci2bsYS64QeD/qz9Dgv1FHa3HR4bb1ddu/rFNHijP7Y5KoEUt1MEOYakP/fQNvpSUn2HEAGQw==",
   "success": true,
   "projectFilePath": "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.Infrastructure\\Authentication.Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -97,7 +97,10 @@
     "C:\\Users\\igors\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512",
     "C:\\Users\\igors\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",
     "C:\\Users\\igors\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
-    "C:\\Users\\igors\\.nuget\\packages\\system.windows.extensions\\5.0.0\\system.windows.extensions.5.0.0.nupkg.sha512"
+    "C:\\Users\\igors\\.nuget\\packages\\system.windows.extensions\\5.0.0\\system.windows.extensions.5.0.0.nupkg.sha512",
+    "C:\\Users\\igors\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.14\\microsoft.netcore.app.ref.7.0.14.nupkg.sha512",
+    "C:\\Users\\igors\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.14\\microsoft.windowsdesktop.app.ref.7.0.14.nupkg.sha512",
+    "C:\\Users\\igors\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.14\\microsoft.aspnetcore.app.ref.7.0.14.nupkg.sha512"
   ],
   "logs": []
 }

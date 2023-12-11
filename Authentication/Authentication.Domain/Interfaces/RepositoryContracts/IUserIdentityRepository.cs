@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Linq.Expressions;
 
 namespace Authentication.Domain.Interfaces.RepositoryContracts;
+
 public interface IUserIdentityRepository : IDisposable
 {
     Task<string> GenerateTokenToChangePasswordAsync(UserIdentity accountIdentity);
@@ -13,8 +14,9 @@ public interface IUserIdentityRepository : IDisposable
     Task UserSignOutAsync();
     Task<IList<string>> FindAllRolesAsync(UserIdentity accountIdentity);
     Task<bool> HaveInTheDatabaseAsync(Expression<Func<UserIdentity, bool>> where);
-    Task<UserIdentity?> FindByPredicateWithSelectorAsync(Expression<Func<UserIdentity, bool>> predicate,
-                                                         Expression<Func<UserIdentity, UserIdentity>>? selector = null,
-                                                         bool asNoTracking = false);
 
+    Task<UserIdentity?> FindByPredicateWithSelectorAsync(
+        Expression<Func<UserIdentity, bool>> predicate,
+        Expression<Func<UserIdentity, UserIdentity>>? selector = null,
+        bool asNoTracking = false);
 }

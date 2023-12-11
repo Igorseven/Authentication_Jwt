@@ -29,14 +29,16 @@ public class UserIdentityController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<DomainNotification>))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<bool> UserRegisterAsync([FromBody] UserIdentityRegisterRequest accountIdentityRegisterRequest) =>
+    public async Task<bool> UserRegisterAsync(
+        [FromBody] UserIdentityRegisterRequest accountIdentityRegisterRequest, CancellationToken cancellationToken) =>
         await _userIdentityCommandService.CreateIdentityAccountAsync(accountIdentityRegisterRequest);
 
     [HttpPut("user_identity_change_password")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<DomainNotification>))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<bool> UserChangePasswordAsync([FromBody] UserIdentityChangePasswordRequest accountIdentityChangePasswordRequest) =>
+    public async Task<bool> UserChangePasswordAsync(
+        [FromBody] UserIdentityChangePasswordRequest accountIdentityChangePasswordRequest) =>
         await _userIdentityCommandService.ChangePasswordAsync(accountIdentityChangePasswordRequest);
 
     [Authorize(Roles = $"{UsersPolicy.ClientRole}, {UsersPolicy.ManagerRole}")]

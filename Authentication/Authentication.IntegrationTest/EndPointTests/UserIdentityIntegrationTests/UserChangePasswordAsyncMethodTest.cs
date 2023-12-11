@@ -47,7 +47,7 @@ public sealed class UserChangePasswordAsyncMethodTest : BaseIntegrationTest
         {
             UserIdentityId = user!.Id,
             NewPassword = "@Test2023",
-            OldPassword = "@Test2020"
+            OldPassword = "@Test2023"
         };
 
         const HttpStatusCode expectedStatusCode = HttpStatusCode.OK;

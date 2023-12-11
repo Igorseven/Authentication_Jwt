@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Fx1mYO5EwYIm4yKqa2vcaH9PYuQ2zPS7ALRlybYwS1yp7746haCrWG97FKoJCNj2rltHxwQjzTZi6LWV5S40ww==",
+  "dgSpecHash": "YK67jDsxwc72HSTfAV6WtaW48FwyeblmjsUo6/LAKUPHuX3AgfmZM+s/LHhQ+wirxj4y2+y2ThxPYawQfFjYEQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.UnitTest\\Authentication.UnitTest.csproj",
   "expectedPackageFiles": [
@@ -175,7 +175,10 @@
     "C:\\Users\\igors\\.nuget\\packages\\xunit.core\\2.4.2\\xunit.core.2.4.2.nupkg.sha512",
     "C:\\Users\\igors\\.nuget\\packages\\xunit.extensibility.core\\2.4.2\\xunit.extensibility.core.2.4.2.nupkg.sha512",
     "C:\\Users\\igors\\.nuget\\packages\\xunit.extensibility.execution\\2.4.2\\xunit.extensibility.execution.2.4.2.nupkg.sha512",
-    "C:\\Users\\igors\\.nuget\\packages\\xunit.runner.visualstudio\\2.4.5\\xunit.runner.visualstudio.2.4.5.nupkg.sha512"
+    "C:\\Users\\igors\\.nuget\\packages\\xunit.runner.visualstudio\\2.4.5\\xunit.runner.visualstudio.2.4.5.nupkg.sha512",
+    "C:\\Users\\igors\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.14\\microsoft.netcore.app.ref.7.0.14.nupkg.sha512",
+    "C:\\Users\\igors\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.14\\microsoft.windowsdesktop.app.ref.7.0.14.nupkg.sha512",
+    "C:\\Users\\igors\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.14\\microsoft.aspnetcore.app.ref.7.0.14.nupkg.sha512"
   ],
   "logs": []
 }

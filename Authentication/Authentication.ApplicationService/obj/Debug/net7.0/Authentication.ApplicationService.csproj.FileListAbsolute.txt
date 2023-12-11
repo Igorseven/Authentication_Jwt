@@ -36,3 +36,4 @@ C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authenti
 C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.ApplicationService\obj\Debug\net7.0\Authentication.ApplicationService.csproj.CopyComplete
 C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.ApplicationService\obj\Debug\net7.0\Authentication.ApplicationService.genruntimeconfig.cache
 C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.ApplicationService\obj\Debug\net7.0\ref\Authentication.ApplicationService.dll
+C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.ApplicationService\obj\Debug\net7.0\Authentication.ApplicationService.sourcelink.json

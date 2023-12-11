@@ -31,7 +31,8 @@ public class UserIdentityCommandService : BaseService<UserIdentity>, IUserIdenti
 
     public void Dispose() => _userIdentityRepository.Dispose();
 
-    public async Task<bool> CreateIdentityAccountAsync(UserIdentityRegisterRequest accountIdentityRegisterRequest)
+    public async Task<bool> CreateIdentityAccountAsync(
+        UserIdentityRegisterRequest accountIdentityRegisterRequest)
     {
         if (await _userIdentityRepository.HaveInTheDatabaseAsync(
                 u => u.NormalizedUserName == accountIdentityRegisterRequest.Login.ToUpper()))

@@ -32,3 +32,4 @@ C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authenti
 C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Infrastructure\obj\Debug\net7.0\Authentication.Infrastructure.pdb
 C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Infrastructure\obj\Debug\net7.0\Authentication.Infrastructure.genruntimeconfig.cache
 C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Infrastructure\obj\Debug\net7.0\ref\Authentication.Infrastructure.dll
+C:\Users\igors\Documents\Net7\Authentication_Jwt_Poc\Authentication_Jwt\Authentication\Authentication.Infrastructure\obj\Debug\net7.0\Authentication.Infrastructure.sourcelink.json

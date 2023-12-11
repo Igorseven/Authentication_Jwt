@@ -42,7 +42,7 @@ public sealed class UnitOfWorkFilter : ActionFilterAttribute
 
     private void LonginMethod(ActionExecutedContext context)
     {
-        if (context.Exception is null)
+        if (context.Exception is null && context.ModelState.IsValid)
             _unitOfWork.CommitTransaction();
         else
             _unitOfWork.RollbackTransaction();

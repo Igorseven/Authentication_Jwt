@@ -24,7 +24,9 @@ public class AuthenticationController : ControllerBase
     [HttpPost("generate_access_token")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<DomainNotification>))]
-    public async Task<AuthenticationLoginResponse?> CreateAccessTokenAsync([FromBody] UserLogin userLogin) =>
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(IEnumerable<DomainNotification>))]
+    public async Task<AuthenticationLoginResponse?> CreateAccessTokenAsync(
+        [FromBody] UserLogin userLogin) =>
         await _authenticationTokenCommandService.GenerateAccessTokenAsync(userLogin);
 
 
@@ -33,7 +35,9 @@ public class AuthenticationController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<DomainNotification>))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<AuthenticationLoginResponse?> CreateRefreshTokenAsync([FromBody] UpdateAccessToken updateAccessToken) =>
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(IEnumerable<DomainNotification>))]
+    public async Task<AuthenticationLoginResponse?> CreateRefreshTokenAsync(
+        [FromBody] UpdateAccessToken updateAccessToken) =>
         await _authenticationTokenCommandService.GenerateRefreshTokenAsync(updateAccessToken);
 }
 
