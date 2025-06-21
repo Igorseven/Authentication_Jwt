@@ -4,6 +4,7 @@ using Authentication.Domain.Enums;
 using Authentication.UnitTest.Services.AuthenticationCommandServiceUnitTest.Base;
 using Moq;
 using System.Security.Claims;
+using Authentication.UnitTest.Builders;
 using Authentication.UnitTest.TestTools;
 
 namespace Authentication.UnitTest.Services.AuthenticationCommandServiceUnitTest;
@@ -17,22 +18,26 @@ public sealed class GenerateAccessTokenAsyncMethodUnitTest : AuthenticationComma
         {
             Login = "login@test.com",
             Password = "@Password2023",
-            SystemOrigin = Guid.NewGuid()
+            SystemOrigin = new Guid("8ad769d7-ab2e-4a91-a854-c831a8100009")  
         };
 
         List<Claim> claims = new()
         {
             new Claim(ClaimTypes.Name, userLogin.Login),
-            new Claim(ClaimTypes.Actor, EUserType.Client.ToString())
+            new Claim(ClaimTypes.Actor, nameof(EUserType.Client))
         };
+        
+        var user = UserBuilderTest
+            .NewObject()
+            .DomainObject();
 
-        UserIdentityQueryService
-            .Setup(a => a.CheckLoginAndPasswordAsync(It.IsAny<AuthenticationRequest>()))
-            .ReturnsAsync(true);
+        UserQueryService
+            .Setup(a => a.FindByUserNameAsync(It.IsAny<string>()))
+            .ReturnsAsync(user);
         RefreshTokenRepository
             .Setup(r => r.DeleteAsync(UtilTools.BuildPredicateFunc<UserToken>()))
             .ReturnsAsync(true);
-        UserIdentityQueryService
+        UserQueryService
             .Setup(a => a.GetUseClaimsAsync(It.IsAny<string>()))
             .ReturnsAsync(claims);
         RefreshTokenRepository
@@ -42,13 +47,13 @@ public sealed class GenerateAccessTokenAsyncMethodUnitTest : AuthenticationComma
         var serviceResult = await AuthenticationCommandService.GenerateAccessTokenAsync(userLogin);
 
         Assert.NotNull(serviceResult);
-        UserIdentityQueryService
-            .Verify(a => a.CheckLoginAndPasswordAsync(
-                It.IsAny<AuthenticationRequest>()), Times.Once());
+        UserQueryService
+            .Verify(a => a.FindByUserNameAsync(
+                It.IsAny<string>()), Times.Once());
         RefreshTokenRepository
             .Verify(r => r.DeleteAsync(
                 UtilTools.BuildPredicateFunc<UserToken>()), Times.Once());
-        UserIdentityQueryService
+        UserQueryService
             .Verify(a => a.GetUseClaimsAsync(
                 It.IsAny<string>()), Times.Once());
         RefreshTokenRepository
@@ -65,26 +70,22 @@ public sealed class GenerateAccessTokenAsyncMethodUnitTest : AuthenticationComma
         {
             Login = "login@test.com",
             Password = "@Password2023",
-            SystemOrigin = Guid.NewGuid()
+            SystemOrigin = new Guid("8ad769d7-ab2e-4a91-a854-c831a8100009")  
         };
 
-        UserIdentityQueryService
-            .Setup(a => a.CheckLoginAndPasswordAsync(It.IsAny<AuthenticationRequest>()))
-            .ReturnsAsync(false);
+        UserQueryService
+            .Setup(a => a.FindByUserNameAsync(It.IsAny<string>()));
 
         var serviceResult = await AuthenticationCommandService.GenerateAccessTokenAsync(userLogin);
 
         Assert.Null(serviceResult);
-        UserIdentityQueryService
-            .Verify(a => a.CheckLoginAndPasswordAsync(
-                It.IsAny<AuthenticationRequest>()), Times.Once());
+        UserQueryService
+            .Verify(a => a.FindByUserNameAsync(
+                It.IsAny<string>()), Times.Once());
         RefreshTokenRepository.
             Verify(r => r.DeleteAsync(
                 UtilTools.BuildPredicateFunc<UserToken>()), Times.Never());
-        UserIdentityQueryService
-            .Verify(a => a.FindByUserNameAsync(
-                It.IsAny<string>()), Times.Never());
-        UserIdentityQueryService
+        UserQueryService
             .Verify(a => a.GetUseClaimsAsync(
                 It.IsAny<string>()), Times.Never());
         RefreshTokenRepository

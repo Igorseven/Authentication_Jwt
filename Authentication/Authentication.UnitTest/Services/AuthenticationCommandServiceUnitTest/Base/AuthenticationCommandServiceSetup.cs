@@ -13,7 +13,7 @@ public abstract class AuthenticationCommandServiceSetup
 {
     protected readonly Mock<IUserTokenRepository> RefreshTokenRepository;
     protected readonly Mock<INotificationHandler> Notification;
-    protected readonly Mock<IUserQueryService> UserIdentityQueryService;
+    protected readonly Mock<IUserQueryService> UserQueryService;
 
     protected readonly SymmetricSecurityKey Key;
     protected readonly AuthenticationCommandService AuthenticationCommandService;
@@ -25,12 +25,12 @@ public abstract class AuthenticationCommandServiceSetup
         var options = Options.Create(GetJwtTokenOptions());
         RefreshTokenRepository = new Mock<IUserTokenRepository>();
         Notification = new Mock<INotificationHandler>();
-        UserIdentityQueryService = new Mock<IUserQueryService>();
+        UserQueryService = new Mock<IUserQueryService>();
         JwtTokenOptions = GetJwtTokenOptions();
         Key = new SymmetricSecurityKey("_habKLEnMAUeb-ZXAiLllIiAr.dev"u8.ToArray());
         AuthenticationCommandService = new AuthenticationCommandService(
             RefreshTokenRepository.Object,
-            UserIdentityQueryService.Object,
+            UserQueryService.Object,
             Notification.Object,
             options);
     }

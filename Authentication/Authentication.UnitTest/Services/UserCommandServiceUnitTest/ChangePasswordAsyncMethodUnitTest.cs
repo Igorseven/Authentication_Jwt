@@ -8,9 +8,9 @@ using Moq;
 
 
 namespace Authentication.UnitTest.Services.UserIdentityCommandServiceUnitTest;
+
 public sealed class ChangePasswordAsyncMethodUnitTest : UserIdentityCommandServiceSetup
 {
-
     [Fact]
     [Trait("Success", "Perfect setting")]
     public async Task ChangePasswordAsync_PerfectSetting_ReturnTrue()
@@ -23,24 +23,36 @@ public sealed class ChangePasswordAsyncMethodUnitTest : UserIdentityCommandServi
         };
 
 
-        var accountIdentity = UserBuilderTest.NewObject().DomainObject();
+        var user = UserBuilderTest
+            .NewObject()
+            .DomainObject();
 
-        UserIdentityRepository.Setup(r => r.FindByPredicateWithSelectorAsync(UtilTools.BuildPredicateFunc<User>(),
-                                                                              UtilTools.BuildSelectorFunc<User>(),
-                                                                              false)).ReturnsAsync(accountIdentity);
-        UserIdentityRepository.Setup(r => r.ChangePasswordAsync(It.IsAny<User>(),
-                                                                 dtoChangePassword.OldPassword,
-                                                                 dtoChangePassword.NewPassword)).ReturnsAsync(IdentityResult.Success);
+        UserIdentityRepository
+            .Setup(r => r.FindByPredicateWithSelectorAsync(
+                UtilTools.BuildPredicateFunc<User>(),
+                UtilTools.BuildSelectorFunc<User>(),
+                false))
+            .ReturnsAsync(user);
+        UserIdentityRepository
+            .Setup(r => r.ChangePasswordAsync(
+                It.IsAny<User>(),
+                dtoChangePassword.OldPassword,
+                dtoChangePassword.NewPassword))
+            .ReturnsAsync(IdentityResult.Success);
 
         var serviceResult = await UserCommandService.ChangePasswordAsync(dtoChangePassword);
 
         Assert.True(serviceResult);
-        UserIdentityRepository.Verify(r => r.FindByPredicateWithSelectorAsync(UtilTools.BuildPredicateFunc<User>(),
-                                                                               UtilTools.BuildSelectorFunc<User>(),
-                                                                               false), Times.Once());
-        UserIdentityRepository.Verify(r => r.ChangePasswordAsync(It.IsAny<User>(),
-                                                                  dtoChangePassword.OldPassword,
-                                                                  dtoChangePassword.NewPassword), Times.Once());
+        UserIdentityRepository
+            .Verify(r => r.FindByPredicateWithSelectorAsync(
+                UtilTools.BuildPredicateFunc<User>(),
+                UtilTools.BuildSelectorFunc<User>(),
+                false), Times.Once());
+        UserIdentityRepository
+            .Verify(r => r.ChangePasswordAsync(
+                It.IsAny<User>(),
+                dtoChangePassword.OldPassword,
+                dtoChangePassword.NewPassword), Times.Once());
     }
 
     [Fact]
@@ -57,23 +69,32 @@ public sealed class ChangePasswordAsyncMethodUnitTest : UserIdentityCommandServi
 
         var accountIdentity = UserBuilderTest.NewObject().DomainObject();
 
-        UserIdentityRepository.Setup(r => r.FindByPredicateWithSelectorAsync(UtilTools.BuildPredicateFunc<User>(),
-                                                                              UtilTools.BuildSelectorFunc<User>(),
-                                                                              false)).ReturnsAsync(accountIdentity);
-        UserIdentityRepository.Setup(r => r.ChangePasswordAsync(It.IsAny<User>(),
-                                                                 dtoChangePassword.OldPassword,
-                                                                 dtoChangePassword.NewPassword)).ReturnsAsync(IdentityResult.Failed());
+        UserIdentityRepository
+            .Setup(r => r.FindByPredicateWithSelectorAsync(
+                UtilTools.BuildPredicateFunc<User>(),
+                UtilTools.BuildSelectorFunc<User>(),
+                false))
+            .ReturnsAsync(accountIdentity);
+        UserIdentityRepository
+            .Setup(r => r.ChangePasswordAsync(
+                It.IsAny<User>(),
+                dtoChangePassword.OldPassword,
+                dtoChangePassword.NewPassword))
+            .ReturnsAsync(IdentityResult.Failed());
 
         var serviceResult = await UserCommandService.ChangePasswordAsync(dtoChangePassword);
 
         Assert.False(serviceResult);
-        UserIdentityRepository.Verify(r => r.FindByPredicateWithSelectorAsync(UtilTools.BuildPredicateFunc<User>(),
-                                                                               UtilTools.BuildSelectorFunc<User>(),
-                                                                               false), Times.Once());
-        UserIdentityRepository.Verify(r => r.ChangePasswordAsync(It.IsAny<User>(),
-                                                                  dtoChangePassword.OldPassword,
-                                                                  dtoChangePassword.NewPassword), Times.Once());
-
+        UserIdentityRepository
+            .Verify(r => r.FindByPredicateWithSelectorAsync(
+                UtilTools.BuildPredicateFunc<User>(),
+                UtilTools.BuildSelectorFunc<User>(),
+                false), Times.Once());
+        UserIdentityRepository
+            .Verify(r => r.ChangePasswordAsync(
+                It.IsAny<User>(),
+                dtoChangePassword.OldPassword,
+                dtoChangePassword.NewPassword), Times.Once());
     }
 
     [Fact]
@@ -87,21 +108,30 @@ public sealed class ChangePasswordAsyncMethodUnitTest : UserIdentityCommandServi
             NewPassword = "test2023"
         };
 
-        var accountIdentity = UserBuilderTest.NewObject().DomainObject();
+        var accountIdentity = UserBuilderTest
+            .NewObject()
+            .DomainObject();
 
-        UserIdentityRepository.Setup(r => r.FindByPredicateWithSelectorAsync(UtilTools.BuildPredicateFunc<User>(),
-                                                                              UtilTools.BuildSelectorFunc<User>(),
-                                                                              false)).ReturnsAsync(accountIdentity);
+        UserIdentityRepository
+            .Setup(r => r.FindByPredicateWithSelectorAsync(
+                UtilTools.BuildPredicateFunc<User>(),
+                UtilTools.BuildSelectorFunc<User>(),
+                false))
+            .ReturnsAsync(accountIdentity);
 
         var serviceResult = await UserCommandService.ChangePasswordAsync(dtoChangePassword);
 
         Assert.False(serviceResult);
-        UserIdentityRepository.Verify(r => r.FindByPredicateWithSelectorAsync(UtilTools.BuildPredicateFunc<User>(),
-                                                                               UtilTools.BuildSelectorFunc<User>(),
-                                                                               false), Times.Once());
-        UserIdentityRepository.Verify(r => r.ChangePasswordAsync(It.IsAny<User>(),
-                                                                  dtoChangePassword.OldPassword,
-                                                                  dtoChangePassword.NewPassword), Times.Never());
+        UserIdentityRepository
+            .Verify(r => r.FindByPredicateWithSelectorAsync(
+                UtilTools.BuildPredicateFunc<User>(),
+                UtilTools.BuildSelectorFunc<User>(),
+                false), Times.Once());
+        UserIdentityRepository
+            .Verify(r => r.ChangePasswordAsync(
+                It.IsAny<User>(),
+                dtoChangePassword.OldPassword,
+                dtoChangePassword.NewPassword), Times.Never());
     }
 
     [Fact]
@@ -115,18 +145,23 @@ public sealed class ChangePasswordAsyncMethodUnitTest : UserIdentityCommandServi
             NewPassword = "@Newtest2023"
         };
 
-        UserIdentityRepository.Setup(r => r.FindByPredicateWithSelectorAsync(UtilTools.BuildPredicateFunc<User>(),
-                                                                                      UtilTools.BuildSelectorFunc<User>(),
-                                                                                      false));
+        UserIdentityRepository
+            .Setup(r => r.FindByPredicateWithSelectorAsync(
+                UtilTools.BuildPredicateFunc<User>(),
+                UtilTools.BuildSelectorFunc<User>(),
+                false));
 
         var serviceResult = await UserCommandService.ChangePasswordAsync(dtoChangePassword);
 
         Assert.False(serviceResult);
-        UserIdentityRepository.Verify(r => r.FindByPredicateWithSelectorAsync(UtilTools.BuildPredicateFunc<User>(),
-                                                                               UtilTools.BuildSelectorFunc<User>(),
-                                                                               false), Times.Once());
-        UserIdentityRepository.Verify(r => r.ChangePasswordAsync(It.IsAny<User>(),
-                                                                  dtoChangePassword.OldPassword,
-                                                                  dtoChangePassword.NewPassword), Times.Never());
+        UserIdentityRepository
+            .Verify(r => r.FindByPredicateWithSelectorAsync(
+                UtilTools.BuildPredicateFunc<User>(),
+                UtilTools.BuildSelectorFunc<User>(),
+                false), Times.Once());
+        UserIdentityRepository
+            .Verify(r => r.ChangePasswordAsync(It.IsAny<User>(),
+                dtoChangePassword.OldPassword,
+                dtoChangePassword.NewPassword), Times.Never());
     }
 }

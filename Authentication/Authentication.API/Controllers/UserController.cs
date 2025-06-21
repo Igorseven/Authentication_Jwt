@@ -31,7 +31,7 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<DomainNotification>))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<bool> UserRegisterAsync(
-        [FromBody] UserRegisterRequest accountRegisterRequest, CancellationToken cancellationToken) =>
+        [FromBody] UserRegisterRequest accountRegisterRequest) =>
         await _userCommandService.RegisterAsync(accountRegisterRequest);
 
     [HttpPut("change_password_user")]
@@ -43,11 +43,11 @@ public class UserController : ControllerBase
         await _userCommandService.ChangePasswordAsync(accountIdentityChangePasswordRequest);
 
     [Authorize(Roles = $"{UsersPolicy.ClientRole}, {UsersPolicy.ManagerRole}")]
-    [HttpGet("get_user_identity_data")]
+    [HttpGet("get_user_by_token")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<UserSimpleResponse?> GetUserIdentityData() =>
+    public async Task<UserSimpleResponse?> GetByCredential() =>
         await _userQueryService.FindByLoginAsync(User.GetUserName());
 }

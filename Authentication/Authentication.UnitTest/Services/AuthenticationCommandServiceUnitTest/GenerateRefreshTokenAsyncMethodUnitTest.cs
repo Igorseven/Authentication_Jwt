@@ -49,7 +49,7 @@ public sealed class GenerateRefreshTokenAsyncMethodUnitTest : AuthenticationComm
             new Claim(ClaimTypes.Role, nameof(EUserType.Client))
         };
 
-        UserIdentityQueryService
+        UserQueryService
             .Setup(a => a.ExtractUserFromAccessTokenAsync(It.IsAny<ExtractUserRequest>()))
             .ReturnsAsync((login, id));
         RefreshTokenRepository
@@ -58,7 +58,7 @@ public sealed class GenerateRefreshTokenAsyncMethodUnitTest : AuthenticationComm
         RefreshTokenRepository
             .Setup(r => r.DeleteAsync(UtilTools.BuildPredicateFunc<UserToken>()))
             .ReturnsAsync(true);
-        UserIdentityQueryService
+        UserQueryService
             .Setup(a => a.GetUseClaimsAsync(It.IsAny<string>()))
             .ReturnsAsync(claims);
         RefreshTokenRepository
@@ -68,7 +68,7 @@ public sealed class GenerateRefreshTokenAsyncMethodUnitTest : AuthenticationComm
         var serviceResult = await AuthenticationCommandService.GenerateRefreshTokenAsync(updateAccessToken);
 
         Assert.True(serviceResult?.RefreshToken != refreshToken.Token);
-        UserIdentityQueryService
+        UserQueryService
             .Verify(a => a.ExtractUserFromAccessTokenAsync(
                 It.IsAny<ExtractUserRequest>()), Times.Once());
         RefreshTokenRepository
@@ -77,7 +77,7 @@ public sealed class GenerateRefreshTokenAsyncMethodUnitTest : AuthenticationComm
         RefreshTokenRepository
             .Verify(r => r.DeleteAsync(
                 UtilTools.BuildPredicateFunc<UserToken>()), Times.Once());
-        UserIdentityQueryService
+        UserQueryService
             .Verify(a => a.GetUseClaimsAsync(
                 It.IsAny<string>()), Times.Once());
         RefreshTokenRepository
@@ -97,14 +97,6 @@ public sealed class GenerateRefreshTokenAsyncMethodUnitTest : AuthenticationComm
                 AccessToken = "C15Q4RluHecvYbJmtdPoGdc+hnOqD1p8OWP418mPJj8=",
                 RefreshToken = refreshToken,
                 SystemOrigin = new Guid("8ad769d7-ab2e-4a91-a854-c831a8100009")  
-            },
-
-
-            new RefreshToken
-            {
-                RefreshTokenId = 1,
-                Token = refreshToken,
-                UserName = "test@gmail.com"
             }
         };
     }
@@ -118,7 +110,7 @@ public sealed class GenerateRefreshTokenAsyncMethodUnitTest : AuthenticationComm
         var login = "login@login.com";
         var id = Guid.NewGuid();
         
-        UserIdentityQueryService
+        UserQueryService
             .Setup(a => a.ExtractUserFromAccessTokenAsync(It.IsAny<ExtractUserRequest>()))
             .ReturnsAsync((login, id));
         RefreshTokenRepository
@@ -129,7 +121,7 @@ public sealed class GenerateRefreshTokenAsyncMethodUnitTest : AuthenticationComm
         var serviceResult = await AuthenticationCommandService.GenerateRefreshTokenAsync(updateAccessToken);
 
         Assert.Null(serviceResult);
-        UserIdentityQueryService
+        UserQueryService
             .Verify(a => a.ExtractUserFromAccessTokenAsync(
                 It.IsAny<ExtractUserRequest>()), Times.Once());
         RefreshTokenRepository
@@ -138,7 +130,7 @@ public sealed class GenerateRefreshTokenAsyncMethodUnitTest : AuthenticationComm
         RefreshTokenRepository
             .Verify(r => r.DeleteAsync(
                 UtilTools.BuildPredicateFunc<UserToken>()), Times.Never());
-        UserIdentityQueryService
+        UserQueryService
             .Verify(a => a.GetUseClaimsAsync(
                 It.IsAny<string>()), Times.Never());
         RefreshTokenRepository
@@ -168,13 +160,13 @@ public sealed class GenerateRefreshTokenAsyncMethodUnitTest : AuthenticationComm
     public async Task GenerateRefreshTokenAsync_ErrorExtractingTokenData_ReturnNullAndNotification(
         UpdateAccessToken updateAccessToken)
     {
-        UserIdentityQueryService
+        UserQueryService
             .Setup(a => a.ExtractUserFromAccessTokenAsync(It.IsAny<ExtractUserRequest>()));
 
         var serviceResult = await AuthenticationCommandService.GenerateRefreshTokenAsync(updateAccessToken);
 
         Assert.Null(serviceResult);
-        UserIdentityQueryService
+        UserQueryService
             .Verify(a => a.ExtractUserFromAccessTokenAsync(
                 It.IsAny<ExtractUserRequest>()), Times.Once());
         RefreshTokenRepository
@@ -183,7 +175,7 @@ public sealed class GenerateRefreshTokenAsyncMethodUnitTest : AuthenticationComm
         RefreshTokenRepository
             .Verify(r => r.DeleteAsync(
                 UtilTools.BuildPredicateFunc<UserToken>()), Times.Never());
-        UserIdentityQueryService
+        UserQueryService
             .Verify(a => a.GetUseClaimsAsync(
                 It.IsAny<string>()), Times.Never());
         RefreshTokenRepository
