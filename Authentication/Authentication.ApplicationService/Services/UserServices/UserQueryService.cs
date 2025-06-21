@@ -9,41 +9,41 @@ using Authentication.Domain.Entities;
 using Authentication.Domain.Extensions;
 using Authentication.Domain.Interfaces.RepositoryContracts;
 
-namespace Authentication.ApplicationService.Services.UserIdentityServices;
+namespace Authentication.ApplicationService.Services.UserServices;
 
 public sealed class UserQueryService : IUserQueryService
 {
-    private readonly IUserIdentityRepository _userIdentityRepository;
-    private readonly IUserIdentityMapper _userIdentityMapper;
+    private readonly IUserRepository _userRepository;
+    private readonly IUserMapper _userMapper;
 
-    public UserQueryService(IUserIdentityRepository userIdentityRepository,
-        IUserIdentityMapper userIdentityMapper)
+    public UserQueryService(IUserRepository userRepository,
+        IUserMapper userMapper)
     {
-        _userIdentityRepository = userIdentityRepository;
-        _userIdentityMapper = userIdentityMapper;
+        _userRepository = userRepository;
+        _userMapper = userMapper;
     }
 
     public async Task<bool> CheckLoginAndPasswordAsync(AuthenticationRequest login)
     {
-        var loginResult = await _userIdentityRepository.PasswordSignInAsync(login.Login, login.Password);
+        var loginResult = await _userRepository.PasswordSignInAsync(login.Login, login.Password);
 
         return loginResult.Succeeded;
     }
 
     public async Task<UserSimpleResponse?> FindByLoginAsync(string userName)
     {
-        var userIdentity = await _userIdentityRepository.FindByPredicateWithSelectorAsync(
+        var userIdentity = await _userRepository.FindByPredicateWithSelectorAsync(
             u => u.NormalizedUserName == userName.ToUpper(),
             QueryProjectionUserIdentityData(),
             true);
 
         return userIdentity is null 
             ? null 
-            : _userIdentityMapper.DomainToSimpleResponse(userIdentity);
+            : _userMapper.DomainToSimpleResponse(userIdentity);
     }
 
     public async Task<User?> FindByUserNameAsync(string userName) =>
-        await _userIdentityRepository.FindByPredicateWithSelectorAsync(
+        await _userRepository.FindByPredicateWithSelectorAsync(
             u => u.NormalizedUserName == userName.ToUpper(),
             null, 
             true);
@@ -58,7 +58,7 @@ public sealed class UserQueryService : IUserQueryService
             out var securityToken);
 
         if (principal?.Identity?.Name is null ||
-            !await _userIdentityRepository.HaveInTheDatabaseAsync(u => u.UserName == principal.Identity.Name))
+            !await _userRepository.HaveInTheDatabaseAsync(u => u.UserName == principal.Identity.Name))
         {
             return null;
         }
@@ -76,11 +76,11 @@ public sealed class UserQueryService : IUserQueryService
 
     public async Task<List<Claim>> GetUseClaimsAsync(string userName)
     {
-        var accountIdentity = await _userIdentityRepository.FindByPredicateWithSelectorAsync(
+        var accountIdentity = await _userRepository.FindByPredicateWithSelectorAsync(
             u => u.NormalizedUserName == userName.ToUpper(),
             null, true);
 
-        var userRoles = await _userIdentityRepository.FindAllRolesAsync(accountIdentity!);
+        var userRoles = await _userRepository.FindAllRolesAsync(accountIdentity!);
 
         var claims = DefaultClaims(accountIdentity!);
 

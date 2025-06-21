@@ -1,5 +1,5 @@
 ﻿using Authentication.ApplicationService.Interfaces.MapperContracts;
-using Authentication.ApplicationService.Services.UserIdentityServices;
+using Authentication.ApplicationService.Services.UserServices;
 using Authentication.Domain.Interfaces.RepositoryContracts;
 using Authentication.Domain.Providers;
 using Moq;
@@ -7,16 +7,16 @@ using Moq;
 namespace Authentication.UnitTest.Services.UserQueryServiceUnitTest.Base;
 public abstract class UserIdentityQueryServiceSetup
 {
-    protected readonly Mock<IUserIdentityRepository> UserIdentityRepository;
-    protected readonly Mock<IUserIdentityMapper> UserIdentityMapper;
+    protected readonly Mock<IUserRepository> UserIdentityRepository;
+    protected readonly Mock<IUserMapper> UserIdentityMapper;
     protected readonly UserQueryService UserQueryService;
     protected readonly JwtTokenOptions JwtTokenOptions;
     protected readonly string SecurityAlgorithms = Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256;
 
     protected UserIdentityQueryServiceSetup()
     {
-        UserIdentityRepository = new Mock<IUserIdentityRepository>();
-        UserIdentityMapper = new Mock<IUserIdentityMapper>();
+        UserIdentityRepository = new Mock<IUserRepository>();
+        UserIdentityMapper = new Mock<IUserMapper>();
         JwtTokenOptions = GetJwtTokenOptions();
         UserQueryService = new UserQueryService(UserIdentityRepository.Object,
                                         UserIdentityMapper.Object
@@ -29,6 +29,7 @@ public abstract class UserIdentityQueryServiceSetup
            Audience = "AsecureRestApiUser",
            Issuer = "AuthenticationApi",
            DurationInMinutes = 60,
-           JwtKey = "_habKLEnMAUeb-ZXAiLllIiAr.dev"
+           JwtKey = "_habKLEnMAUeb-ZXAiLllIiAr.dev",
+           RequireHttpsMetadata = true
        };
 }

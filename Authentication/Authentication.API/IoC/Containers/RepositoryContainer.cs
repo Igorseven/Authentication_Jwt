@@ -1,13 +1,13 @@
 ﻿using Authentication.Domain.Interfaces.RepositoryContracts;
 using Authentication.Infrastructure.Repository;
 
-namespace Authentication.API.Settings.Configurations.DependencyInjectionSettings;
+namespace Authentication.API.IoC.Containers;
 
-public static class RepositoryDi
+public static class RepositoryContainer
 {
-    public static IServiceCollection AddRepositoryDi(this IServiceCollection services)
+    public static IServiceCollection AddRepositoryContainer(this IServiceCollection services)
     {
-        return services.AddScoped<IUserIdentityRepository, UserIdentityRepository>()
+        return services.AddScoped<IUserRepository, UserRepository>()
                         .AddScoped<IRoleRepository, RoleRepository>()
                         .AddScoped<IUserRoleRepository, UserRoleRepository>()
                         .AddScoped<IUserTokenRepository, UserTokenRepository>();

@@ -4,11 +4,11 @@ namespace Authentication.IntegrationTest.Settings;
 
 public abstract class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>
 {
-    protected readonly HttpClient _client;
-    protected readonly IServiceScope _scope;
+    protected readonly HttpClient Client;
+    protected readonly IServiceScope Scope;
     protected BaseIntegrationTest(IntegrationTestWebAppFactory factory)
     {
-        _scope = factory.Services.CreateScope();
-        _client = factory.CreateClient();
+        Scope = factory.Services.CreateScope();
+        Client = factory.CreateClient();
     }
 }

@@ -6,4 +6,5 @@ public sealed class JwtTokenOptions
     public required string Issuer { get; init; }
     public required string Audience { get; init; }
     public required double DurationInMinutes { get; init; }
+    public required bool RequireHttpsMetadata { get; init; }
 }

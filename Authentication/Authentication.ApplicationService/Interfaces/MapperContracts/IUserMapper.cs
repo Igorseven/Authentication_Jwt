@@ -3,7 +3,7 @@ using Authentication.ApplicationService.DataTransferObjects.Responses.UserIdenti
 using Authentication.Domain.Entities;
 
 namespace Authentication.ApplicationService.Interfaces.MapperContracts;
-public interface IUserIdentityMapper
+public interface IUserMapper
 {
     User DtoRegisterToDomain(UserRegisterRequest userRegisterRequest);
 

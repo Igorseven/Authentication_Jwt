@@ -21,7 +21,7 @@ public sealed class TestAuthHandler : AuthenticationHandler<TestAuthHandlerOptio
 
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        var claims = new[] { new Claim(ClaimTypes.NameIdentifier, Options._defaultUserId) };
+        var claims = new[] { new Claim(ClaimTypes.NameIdentifier, Options.DefaultUserId) };
         var identity = new ClaimsIdentity(claims, AuthenticationScheme);
         var principal = new ClaimsPrincipal(identity);
         var ticket = new AuthenticationTicket(principal, AuthenticationScheme);

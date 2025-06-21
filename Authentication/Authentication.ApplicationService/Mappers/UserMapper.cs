@@ -5,7 +5,7 @@ using Authentication.Domain.Entities;
 using Authentication.Domain.Enums;
 
 namespace Authentication.ApplicationService.Mappers;
-public sealed class UserMapper : IUserIdentityMapper
+public sealed class UserMapper : IUserMapper
 {
     public User DtoRegisterToDomain(UserRegisterRequest accountRegisterRequest) =>
          new()

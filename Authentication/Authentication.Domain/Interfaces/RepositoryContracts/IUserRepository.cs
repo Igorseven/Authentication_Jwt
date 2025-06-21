@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Authentication.Domain.Interfaces.RepositoryContracts;
 
-public interface IUserIdentityRepository : IDisposable
+public interface IUserRepository : IDisposable
 {
     Task<string> GenerateTokenToChangePasswordAsync(User account);
     Task<IdentityResult> SaveAsync(User account);

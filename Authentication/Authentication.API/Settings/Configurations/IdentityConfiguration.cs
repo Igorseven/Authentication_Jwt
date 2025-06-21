@@ -1,14 +1,14 @@
-﻿using Authentication.Domain.Entities;
+﻿using System.Text;
+using Authentication.Domain.Entities;
 using Authentication.Domain.Extensions;
 using Authentication.Infrastructure.ORM.Context;
 using Microsoft.AspNetCore.Identity;
-using System.Text;
 
-namespace Authentication.API.Settings.Configurations.DependencyInjectionSettings;
+namespace Authentication.API.Settings.Configurations;
 
-public static class IdentityDi
+public static class IdentityConfiguration
 {
-    public static IServiceCollection AddIdentityDi(this IServiceCollection services)
+    public static IServiceCollection AddIdentityConfiguration(this IServiceCollection services)
     {
 
         services.AddIdentityCore<User>(options =>

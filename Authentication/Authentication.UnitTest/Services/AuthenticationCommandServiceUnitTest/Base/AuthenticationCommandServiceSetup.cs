@@ -42,6 +42,7 @@ public abstract class AuthenticationCommandServiceSetup
             Audience = "Audience",
             Issuer = "Issuer",
             DurationInMinutes = 60,
-            JwtKey = "_habKLEnMAUeb-ZXAiLllIiAr.dev"
+            JwtKey = "_habKLEnMAUeb-ZXAiLllIiAr.dev",
+            RequireHttpsMetadata = true
         };
 }

@@ -1,4 +1,6 @@
-﻿using Authentication.ApplicationService.Interfaces.MapperContracts;
+﻿using System.Linq.Expressions;
+using Authentication.ApplicationService.DataTransferObjects.Requests.UserRequest;
+using Authentication.ApplicationService.Interfaces.MapperContracts;
 using Authentication.ApplicationService.Interfaces.ServiceContracts;
 using Authentication.ApplicationService.NotificatioTrace;
 using Authentication.Domain.Entities;
@@ -9,44 +11,42 @@ using Authentication.Domain.Handlers.ValidationHandler;
 using Authentication.Domain.Interfaces.OthersContracts;
 using Authentication.Domain.Interfaces.RepositoryContracts;
 using Microsoft.AspNetCore.Identity;
-using System.Linq.Expressions;
-using Authentication.ApplicationService.DataTransferObjects.Requests.UserRequest;
 
-namespace Authentication.ApplicationService.Services.UserIdentityServices;
+namespace Authentication.ApplicationService.Services.UserServices;
 
 public class UserCommandService : BaseService<User>, IUserCommandService
 {
-    private readonly IUserIdentityRepository _userIdentityRepository;
-    private readonly IUserIdentityMapper _userIdentityMapper;
+    private readonly IUserRepository _userRepository;
+    private readonly IUserMapper _userMapper;
 
-    public UserCommandService(IUserIdentityRepository userIdentityRepository,
+    public UserCommandService(IUserRepository userRepository,
         IValidate<User> validate,
         INotificationHandler notification,
-        IUserIdentityMapper userIdentityMapper)
+        IUserMapper userMapper)
         : base(notification, validate)
 
     {
-        _userIdentityRepository = userIdentityRepository;
-        _userIdentityMapper = userIdentityMapper;
+        _userRepository = userRepository;
+        _userMapper = userMapper;
     }
 
-    public void Dispose() => _userIdentityRepository.Dispose();
+    public void Dispose() => _userRepository.Dispose();
 
     public async Task<bool> RegisterAsync(UserRegisterRequest accountRegisterRequest)
     {
-        if (await _userIdentityRepository.HaveInTheDatabaseAsync(u =>
+        if (await _userRepository.HaveInTheDatabaseAsync(u =>
                 u.NormalizedUserName == accountRegisterRequest.Login.ToUpper()))
         {
             return _notification.CreateNotification(UserIdentityServiceTrace.CreateIdentityAccountMethod,
                 EMessage.Exist.GetDescription().FormatTo("Login"));
         }
 
-        var accountIdentity = _userIdentityMapper.DtoRegisterToDomain(accountRegisterRequest);
+        var accountIdentity = _userMapper.DtoRegisterToDomain(accountRegisterRequest);
 
         if (!await EntityValidationAsync(accountIdentity))
             return false;
 
-        var saveResult = await _userIdentityRepository.SaveAsync(accountIdentity);
+        var saveResult = await _userRepository.SaveAsync(accountIdentity);
 
         if (!saveResult.Succeeded)
             AddIdentityErrors(saveResult);
@@ -56,7 +56,7 @@ public class UserCommandService : BaseService<User>, IUserCommandService
 
     public async Task<bool> ChangePasswordAsync(UserIdentityChangePasswordRequest accountIdentityChangePasswordRequest)
     {
-        var userIdentity = await _userIdentityRepository.FindByPredicateWithSelectorAsync(
+        var userIdentity = await _userRepository.FindByPredicateWithSelectorAsync(
             u => u.Id == accountIdentityChangePasswordRequest.UserIdentityId,
             QueryProjectionForChangePassword());
 
@@ -68,7 +68,7 @@ public class UserCommandService : BaseService<User>, IUserCommandService
             return _notification.CreateNotification(UserIdentityServiceTrace.ChangePassword,
                 "A senha não atende aos requisitos.");
 
-        var updateResult = await _userIdentityRepository.ChangePasswordAsync(userIdentity,
+        var updateResult = await _userRepository.ChangePasswordAsync(userIdentity,
             accountIdentityChangePasswordRequest.OldPassword,
             accountIdentityChangePasswordRequest.NewPassword);
 

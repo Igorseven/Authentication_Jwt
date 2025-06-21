@@ -29,7 +29,7 @@ public class IntegrationTestWebAppFactory: WebApplicationFactory<Program>, IAsyn
             services.AddAuthentication(TestAuthHandler.AuthenticationScheme)
                 .AddScheme<TestAuthHandlerOptions, TestAuthHandler>(
                     TestAuthHandler.AuthenticationScheme, 
-                    options => { });
+                    _ => { });
 
             services.RemoveAll(typeof(DbContextOptions<ApplicationContext>));
 

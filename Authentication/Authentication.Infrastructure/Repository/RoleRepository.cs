@@ -17,7 +17,8 @@ public sealed class RoleRepository : BaseRepository<Role>, IRoleRepository
         _roleManager = roleManager;
     }
 
-    public async Task<bool> HaveInDatabaseAsync(Expression<Func<Role, bool>> predicate) => await DbSetContext.AnyAsync(predicate);
+    public async Task<bool> HaveInDatabaseAsync(Expression<Func<Role, bool>> predicate) => 
+        await DbSetContext.AnyAsync(predicate);
 
     public async Task<IEnumerable<Role>> FindAllAsync(Expression<Func<Role, Role>>? selector = null)
     {
@@ -31,7 +32,10 @@ public sealed class RoleRepository : BaseRepository<Role>, IRoleRepository
         return await query.ToListAsync();
     }
 
-    public async Task<Role?> FindByPredicateWithSelectorAsync(Expression<Func<Role, bool>> predicate, Expression<Func<Role, Role>>? selector = null, bool asNoTracking = false)
+    public async Task<Role?> FindByPredicateWithSelectorAsync(
+        Expression<Func<Role, bool>> predicate,
+        Expression<Func<Role, Role>>? selector = null, 
+        bool asNoTracking = false)
     {
         IQueryable<Role> query = DbSetContext;
 
@@ -44,7 +48,9 @@ public sealed class RoleRepository : BaseRepository<Role>, IRoleRepository
         return await query.FirstOrDefaultAsync(predicate);
     }
 
-    public async Task<Role?> FindByPredicateAsync(Expression<Func<Role, bool>> predicate, bool asNoTracking = false)
+    public async Task<Role?> FindByPredicateAsync(
+        Expression<Func<Role, bool>> predicate, 
+        bool asNoTracking = false)
     {
         IQueryable<Role> query = DbSetContext;
 
@@ -54,7 +60,8 @@ public sealed class RoleRepository : BaseRepository<Role>, IRoleRepository
         return await query.FirstOrDefaultAsync(predicate);
     }
 
-    public async Task<IdentityResult> SaveAsync(Role role) => await _roleManager.CreateAsync(role);
+    public async Task<IdentityResult> SaveAsync(Role role) => 
+        await _roleManager.CreateAsync(role);
 
 
     public async Task<IdentityResult> DeleteAsync(Role role)

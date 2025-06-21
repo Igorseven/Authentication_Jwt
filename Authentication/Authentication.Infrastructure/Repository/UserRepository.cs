@@ -7,25 +7,28 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Authentication.Infrastructure.Repository;
-public class UserIdentityRepository : BaseRepository<User>, IUserIdentityRepository
+
+public class UserRepository : BaseRepository<User>, IUserRepository
 {
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
 
-    public UserIdentityRepository(ApplicationContext context,
-                                  UserManager<User> userManager,
-                                  SignInManager<User> signInManager)
+    public UserRepository(ApplicationContext context,
+        UserManager<User> userManager,
+        SignInManager<User> signInManager)
         : base(context)
     {
         _userManager = userManager;
         _signInManager = signInManager;
     }
 
-    public async Task<bool> HaveInTheDatabaseAsync(Expression<Func<User, bool>> where) => await DbSetContext.AnyAsync(where);
+    public async Task<bool> HaveInTheDatabaseAsync(Expression<Func<User, bool>> where) =>
+        await DbSetContext.AnyAsync(where);
 
-    public async Task<User?> FindByPredicateWithSelectorAsync(Expression<Func<User, bool>> predicate,
-                                                                      Expression<Func<User, User>>? selector = null,
-                                                                      bool asNoTracking = false)
+    public async Task<User?> FindByPredicateWithSelectorAsync(
+        Expression<Func<User, bool>> predicate,
+        Expression<Func<User, User>>? selector = null,
+        bool asNoTracking = false)
     {
         IQueryable<User> query = DbSetContext;
 
@@ -50,7 +53,10 @@ public class UserIdentityRepository : BaseRepository<User>, IUserIdentityReposit
     public async Task<string> GenerateTokenToChangePasswordAsync(User entity) =>
         await _userManager.GeneratePasswordResetTokenAsync(entity);
 
-    public async Task<IdentityResult> ChangePasswordAsync(User entity, string currentPassword, string newPassword)
+    public async Task<IdentityResult> ChangePasswordAsync(
+        User entity, 
+        string currentPassword,
+        string newPassword)
     {
         DetachedObject(entity);
 
@@ -62,4 +68,3 @@ public class UserIdentityRepository : BaseRepository<User>, IUserIdentityReposit
 
     public async Task UserSignOutAsync() => await _signInManager.SignOutAsync();
 }
-

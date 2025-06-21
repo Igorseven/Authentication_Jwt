@@ -13,7 +13,9 @@ public sealed class UserRoleRepository : BaseRepository<UserRole>, IUserRoleRepo
     {
     }
 
-    public async Task<IEnumerable<UserRole>> FindAllWithPredicateAsync(Expression<Func<UserRole, bool>> predicate, Func<IQueryable<UserRole>, IIncludableQueryable<UserRole, object>>? include = null)
+    public async Task<IEnumerable<UserRole>> FindAllWithPredicateAsync(
+        Expression<Func<UserRole, bool>> predicate, 
+        Func<IQueryable<UserRole>, IIncludableQueryable<UserRole, object>>? include = null)
     {
         IQueryable<UserRole> query = DbSetContext;
 
@@ -25,7 +27,9 @@ public sealed class UserRoleRepository : BaseRepository<UserRole>, IUserRoleRepo
         return await query.ToListAsync();
     }
 
-    public async Task<UserRole?> FindByPredicateAsync(Expression<Func<UserRole, bool>> predicate, bool asNoTracking = false)
+    public async Task<UserRole?> FindByPredicateAsync(
+        Expression<Func<UserRole, bool>> predicate, 
+        bool asNoTracking = false)
     {
         IQueryable<UserRole> query = DbSetContext;
 

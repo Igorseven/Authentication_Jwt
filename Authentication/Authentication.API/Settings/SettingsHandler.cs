@@ -4,12 +4,16 @@ namespace Authentication.API.Settings;
 
 public static class SettingsHandler
 {
-    public static IServiceCollection AddSettingsConfigurations(this IServiceCollection services, IConfiguration configuration)
+    public static void AddSettingsControl(this IServiceCollection services, IConfiguration configuration)
     {
-        return services.AddControllersConfiguration()
-                       .AddFiltersConfiguration()
-                       .AddCorsConfiguration()
-                       .AddSwaggerConfiguration()
-                       .AddDependencyInjectionConfiguration(configuration);
+        services.AddProviderConfiguration(configuration);
+        services.AddControllersConfiguration();
+        services.AddCorsConfiguration();
+        services.AddDatabaseConnectionConfiguration();
+        services.AddIdentityConfiguration();
+        services.AddAuthenticationConfiguration(configuration);
+        services.AddFiltersConfiguration();
+        services.AddSwaggerConfiguration();
+        services.AddRateLimitingConfiguration();
     }
 }
