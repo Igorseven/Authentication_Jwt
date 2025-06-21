@@ -11,7 +11,9 @@ namespace Authentication.API.Settings.Configurations;
 
 public static class DependencyInjectionConfiguration
 {
-    public static IServiceCollection AddDependencyInjectionConfiguration(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddDependencyInjectionConfiguration(
+        this IServiceCollection services, 
+        IConfiguration configuration)
     {
         services.AddTransient(sp => sp.GetService<IOptionsMonitor<ConnectionStringOptions>>()!.CurrentValue);
         services.Configure<ConnectionStringOptions>(configuration.GetSection(ConnectionStringOptions.SectionName));
@@ -25,7 +27,9 @@ public static class DependencyInjectionConfiguration
 
 
         services.AddDbContext<ApplicationContext>((serviceProv, options) =>
-           options.UseSqlServer(serviceProv.GetRequiredService<ConnectionStringOptions>().DefaultConnection, sql => sql.CommandTimeout(180)));
+           options.UseSqlServer(
+               serviceProv.GetRequiredService<ConnectionStringOptions>().DefaultConnection, 
+               sql => sql.CommandTimeout(180)));
 
 
         services.AddValidationDI()

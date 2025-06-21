@@ -1,21 +1,22 @@
 ﻿using Authentication.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Authentication.Infrastructure.ORM.Context;
-public sealed class ApplicationContext : IdentityDbContext<UserIdentity,
-                                                           Role,
-                                                           Guid,
-                                                           IdentityUserClaim<Guid>,
-                                                           UserRole, IdentityUserLogin<Guid>,
-                                                           IdentityRoleClaim<Guid>,
-                                                           IdentityUserToken<Guid>>
+
+public sealed class ApplicationContext
+    : IdentityDbContext<User,
+        Role,
+        Guid,
+        UserClaim,
+        UserRole,
+        UserLogin,
+        RoleClaim,
+        UserToken>
 {
     public ApplicationContext(DbContextOptions<ApplicationContext> dbContext)
-         : base(dbContext)
+        : base(dbContext)
     {
-        
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -27,6 +27,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Authentication.API\Authentication.API.csproj" />
+      <ProjectReference Include="..\Authentication.UnitTest\Authentication.UnitTest.csproj" />
     </ItemGroup>
 
 </Project>

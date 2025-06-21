@@ -46,6 +46,19 @@
           }
         }
       },
+      "Bogus/34.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Bogus.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Bogus.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "BouncyCastle.Cryptography/2.2.1": {
         "type": "package",
         "compile": {
@@ -3891,6 +3904,24 @@
         "runtime": {
           "bin/placeholder/Authentication.Infrastructure.dll": {}
         }
+      },
+      "Authentication.UnitTest/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "Authentication.API": "1.0.0",
+          "Authentication.ApplicationService": "1.0.0",
+          "Bogus": "34.0.2",
+          "Microsoft.NET.Test.Sdk": "17.5.0",
+          "Moq": "4.18.4",
+          "xunit": "2.4.2"
+        },
+        "compile": {
+          "bin/placeholder/Authentication.UnitTest.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Authentication.UnitTest.dll": {}
+        }
       }
     }
   },
@@ -3931,6 +3962,25 @@
         "azureicon.png",
         "lib/netstandard2.0/Azure.Identity.dll",
         "lib/netstandard2.0/Azure.Identity.xml"
+      ]
+    },
+    "Bogus/34.0.2": {
+      "sha512": "2KQAuMn3fLAQ2r6jeiffZnpv0bi3GCW3iRB2v1KeHIEBu8MNTh9dBlLTZwGvM0pr+9doKkU8L5JgCURmTmT88A==",
+      "type": "package",
+      "path": "bogus/34.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "bogus.34.0.2.nupkg.sha512",
+        "bogus.nuspec",
+        "lib/net40/Bogus.dll",
+        "lib/net40/Bogus.xml",
+        "lib/net6.0/Bogus.dll",
+        "lib/net6.0/Bogus.xml",
+        "lib/netstandard1.3/Bogus.dll",
+        "lib/netstandard1.3/Bogus.xml",
+        "lib/netstandard2.0/Bogus.dll",
+        "lib/netstandard2.0/Bogus.xml"
       ]
     },
     "BouncyCastle.Cryptography/2.2.1": {
@@ -10863,11 +10913,17 @@
       "type": "project",
       "path": "../Authentication.Infrastructure/Authentication.Infrastructure.csproj",
       "msbuildProject": "../Authentication.Infrastructure/Authentication.Infrastructure.csproj"
+    },
+    "Authentication.UnitTest/1.0.0": {
+      "type": "project",
+      "path": "../Authentication.UnitTest/Authentication.UnitTest.csproj",
+      "msbuildProject": "../Authentication.UnitTest/Authentication.UnitTest.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
       "Authentication.API >= 1.0.0",
+      "Authentication.UnitTest >= 1.0.0",
       "Microsoft.AspNetCore.Mvc.Testing >= 7.0.14",
       "Microsoft.NET.Test.Sdk >= 17.7.1",
       "Moq >= 4.18.4",
@@ -10878,39 +10934,35 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\igors\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\igors\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.IntegrationTest\\Authentication.IntegrationTest.csproj",
+      "projectUniqueName": "C:\\Users\\igors\\OneDrive\\Documentos\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.IntegrationTest\\Authentication.IntegrationTest.csproj",
       "projectName": "Authentication.IntegrationTest",
-      "projectPath": "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.IntegrationTest\\Authentication.IntegrationTest.csproj",
+      "projectPath": "C:\\Users\\igors\\OneDrive\\Documentos\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.IntegrationTest\\Authentication.IntegrationTest.csproj",
       "packagesPath": "C:\\Users\\igors\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.IntegrationTest\\obj\\",
+      "outputPath": "C:\\Users\\igors\\OneDrive\\Documentos\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.IntegrationTest\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\igors\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\igors\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.API\\Authentication.API.csproj": {
-              "projectPath": "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.API\\Authentication.API.csproj"
+            "C:\\Users\\igors\\OneDrive\\Documentos\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.API\\Authentication.API.csproj": {
+              "projectPath": "C:\\Users\\igors\\OneDrive\\Documentos\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.API\\Authentication.API.csproj"
+            },
+            "C:\\Users\\igors\\OneDrive\\Documentos\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.UnitTest\\Authentication.UnitTest.csproj": {
+              "projectPath": "C:\\Users\\igors\\OneDrive\\Documentos\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.UnitTest\\Authentication.UnitTest.csproj"
             }
           }
         }
@@ -10919,7 +10971,13 @@
         "warnAsError": [
           "NU1605"
         ]
-      }
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net7.0": {
@@ -10972,15 +11030,15 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[7.0.14, 7.0.14]"
+            "version": "[7.0.20, 7.0.20]"
           },
           {
             "name": "Microsoft.NETCore.App.Ref",
-            "version": "[7.0.14, 7.0.14]"
+            "version": "[7.0.20, 7.0.20]"
           },
           {
             "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[7.0.14, 7.0.14]"
+            "version": "[7.0.20, 7.0.20]"
           }
         ],
         "frameworkReferences": {
@@ -10988,7 +11046,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

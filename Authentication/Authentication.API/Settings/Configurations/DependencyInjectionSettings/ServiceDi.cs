@@ -9,8 +9,8 @@ public static class ServiceDi
 {
     public static IServiceCollection AddServiceDi(this IServiceCollection services)
     {
-        return services.AddScoped<IUserIdentityCommandService, UserIdentityCommandService>()
-                       .AddScoped<IUserIdentityQueryService, UserIdentityQueryService>()
+        return services.AddScoped<IUserCommandService, UserCommandService>()
+                       .AddScoped<IUserQueryService, UserQueryService>()
                        .AddScoped<IAuthenticationCommandService, AuthenticationCommandService>()
                        .AddScoped<IRoleCommandService, RoleCommandService>()
                        .AddScoped<IRoleQueryService, RoleQueryService>();

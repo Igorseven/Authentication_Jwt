@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
-using Authentication.ApplicationService.DataTransferObjects.Requests.UserIdentityRequest;
+using Authentication.ApplicationService.DataTransferObjects.Requests.UserRequest;
 using Authentication.Domain.Interfaces.RepositoryContracts;
 using Authentication.IntegrationTest.Settings;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +25,7 @@ public sealed class UserChangePasswordAsyncMethodTest : BaseIntegrationTest
     [Trait("StatusCode 200", "Change password")]
     public async Task UserChangePasswordAsync_ReturnStatusCodeOk()
     {
-        var dtoRegister = new UserIdentityRegisterRequest
+        var dtoRegister = new UserRegisterRequest
         {
             Login = "tester@tester.com",
             UserPassword = new()

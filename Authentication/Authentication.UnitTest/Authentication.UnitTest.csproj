@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Authentication.API\Authentication.API.csproj" />
     <ProjectReference Include="..\Authentication.ApplicationService\Authentication.ApplicationService.csproj" />
   </ItemGroup>
 

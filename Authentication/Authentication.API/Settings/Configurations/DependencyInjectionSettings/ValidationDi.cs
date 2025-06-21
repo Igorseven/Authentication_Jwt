@@ -8,7 +8,7 @@ public static class ValidationDi
 {
     public static IServiceCollection AddValidationDI(this IServiceCollection services)
     {
-        services.AddScoped<IValidate<UserIdentity>, UserIdentityValidation>()
+        services.AddScoped<IValidate<User>, UserValidation>()
                 .AddScoped<IValidate<Role>, RoleValidation>();
 
         return services;

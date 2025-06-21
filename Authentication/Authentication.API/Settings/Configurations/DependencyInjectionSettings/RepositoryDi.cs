@@ -10,6 +10,6 @@ public static class RepositoryDi
         return services.AddScoped<IUserIdentityRepository, UserIdentityRepository>()
                         .AddScoped<IRoleRepository, RoleRepository>()
                         .AddScoped<IUserRoleRepository, UserRoleRepository>()
-                        .AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+                        .AddScoped<IUserTokenRepository, UserTokenRepository>();
     }
 }

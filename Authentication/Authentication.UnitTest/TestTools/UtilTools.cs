@@ -1,11 +1,10 @@
-﻿using Authentication.Domain.Enums;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
-using Microsoft.EntityFrameworkCore.Query;
-using Moq;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Text;
+using Authentication.Domain.Enums;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Query;
+using Moq;
 
 namespace Authentication.UnitTest.TestTools;
 public static class UtilTools

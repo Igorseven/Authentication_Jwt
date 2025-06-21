@@ -26,8 +26,8 @@ public class AuthenticationController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<DomainNotification>))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(IEnumerable<DomainNotification>))]
     public async Task<AuthenticationLoginResponse?> CreateAccessTokenAsync(
-        [FromBody] UserLogin userLogin) =>
-        await _authenticationTokenCommandService.GenerateAccessTokenAsync(userLogin);
+        [FromBody] AuthenticationRequest authenticationRequest) =>
+        await _authenticationTokenCommandService.GenerateAccessTokenAsync(authenticationRequest);
 
 
     [Authorize(Roles = $"{UsersPolicy.ClientRole}, {UsersPolicy.ManagerRole}, {UsersPolicy.SysManageRole}")]

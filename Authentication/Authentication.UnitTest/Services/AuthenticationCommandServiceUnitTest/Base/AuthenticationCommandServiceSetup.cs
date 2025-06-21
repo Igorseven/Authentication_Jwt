@@ -6,31 +6,33 @@ using Authentication.Domain.Providers;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
-using System.Text;
 
 namespace Authentication.UnitTest.Services.AuthenticationCommandServiceUnitTest.Base;
+
 public abstract class AuthenticationCommandServiceSetup
 {
-    protected readonly Mock<IRefreshTokenRepository> _refreshTokenRepository;
-    protected readonly Mock<INotificationHandler> _notification;
-    protected readonly Mock<IUserIdentityQueryService> _userIdentityQueryService;
-    protected readonly SymmetricSecurityKey _key;
-    protected readonly AuthenticationCommandService _authenticationCommandService;
-    protected readonly JwtTokenOptions _jwtTokenOptions;
+    protected readonly Mock<IUserTokenRepository> RefreshTokenRepository;
+    protected readonly Mock<INotificationHandler> Notification;
+    protected readonly Mock<IUserQueryService> UserIdentityQueryService;
+
+    protected readonly SymmetricSecurityKey Key;
+    protected readonly AuthenticationCommandService AuthenticationCommandService;
+    protected readonly JwtTokenOptions JwtTokenOptions;
     protected const string SecurityAlgorithm = SecurityAlgorithms.HmacSha256;
 
-    public AuthenticationCommandServiceSetup()
+    protected AuthenticationCommandServiceSetup()
     {
         var options = Options.Create(GetJwtTokenOptions());
-        _refreshTokenRepository = new();
-        _notification = new();
-        _userIdentityQueryService = new();
-        _jwtTokenOptions = GetJwtTokenOptions();
-        _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("_habKLEnMAUeb-ZXAiLllIiAr.dev"));
-        _authenticationCommandService = new AuthenticationCommandService(_refreshTokenRepository.Object,
-                                                                         _userIdentityQueryService.Object,
-                                                                         _notification.Object,
-                                                                         options);
+        RefreshTokenRepository = new Mock<IUserTokenRepository>();
+        Notification = new Mock<INotificationHandler>();
+        UserIdentityQueryService = new Mock<IUserQueryService>();
+        JwtTokenOptions = GetJwtTokenOptions();
+        Key = new SymmetricSecurityKey("_habKLEnMAUeb-ZXAiLllIiAr.dev"u8.ToArray());
+        AuthenticationCommandService = new AuthenticationCommandService(
+            RefreshTokenRepository.Object,
+            UserIdentityQueryService.Object,
+            Notification.Object,
+            options);
     }
 
 
@@ -42,5 +44,4 @@ public abstract class AuthenticationCommandServiceSetup
             DurationInMinutes = 60,
             JwtKey = "_habKLEnMAUeb-ZXAiLllIiAr.dev"
         };
-
 }

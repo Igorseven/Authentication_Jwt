@@ -7,7 +7,7 @@ public static class EntityMapperDi
 {
     public static IServiceCollection AddEntityMapperDi(this IServiceCollection services)
     {
-        return services.AddScoped<IUserIdentityMapper, UserIdentityMapper>()
+        return services.AddScoped<IUserIdentityMapper, UserMapper>()
                        .AddScoped<IRoleMapper, RoleMapper>();
     }
 }

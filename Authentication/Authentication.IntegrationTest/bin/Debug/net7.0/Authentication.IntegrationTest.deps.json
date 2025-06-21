@@ -36,6 +36,7 @@
       "Authentication.IntegrationTest/1.0.0": {
         "dependencies": {
           "Authentication.API": "1.0.0",
+          "Authentication.UnitTest": "1.0.0",
           "Microsoft.AspNetCore.Mvc.Testing": "7.0.14",
           "Microsoft.NET.Test.Sdk": "17.7.1",
           "Moq": "4.18.4",
@@ -385,6 +386,17 @@
         },
         "compile": {
           "lib/netstandard2.0/Azure.Identity.dll": {}
+        }
+      },
+      "Bogus/34.0.2": {
+        "runtime": {
+          "lib/net6.0/Bogus.dll": {
+            "assemblyVersion": "34.0.2.0",
+            "fileVersion": "34.0.2.0"
+          }
+        },
+        "compile": {
+          "lib/net6.0/Bogus.dll": {}
         }
       },
       "BouncyCastle.Cryptography/2.2.1": {
@@ -2554,7 +2566,10 @@
           "Swashbuckle.AspNetCore": "6.5.0"
         },
         "runtime": {
-          "Authentication.API.dll": {}
+          "Authentication.API.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         },
         "compile": {
           "Authentication.API.dll": {}
@@ -2565,7 +2580,10 @@
           "Authentication.Infrastructure": "1.0.0"
         },
         "runtime": {
-          "Authentication.ApplicationService.dll": {}
+          "Authentication.ApplicationService.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         },
         "compile": {
           "Authentication.ApplicationService.dll": {}
@@ -2577,7 +2595,10 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.0"
         },
         "runtime": {
-          "Authentication.Domain.dll": {}
+          "Authentication.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         },
         "compile": {
           "Authentication.Domain.dll": {}
@@ -2592,10 +2613,32 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.0"
         },
         "runtime": {
-          "Authentication.Infrastructure.dll": {}
+          "Authentication.Infrastructure.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         },
         "compile": {
           "Authentication.Infrastructure.dll": {}
+        }
+      },
+      "Authentication.UnitTest/1.0.0": {
+        "dependencies": {
+          "Authentication.API": "1.0.0",
+          "Authentication.ApplicationService": "1.0.0",
+          "Bogus": "34.0.2",
+          "Microsoft.NET.Test.Sdk": "17.7.1",
+          "Moq": "4.18.4",
+          "xunit": "2.4.2"
+        },
+        "runtime": {
+          "Authentication.UnitTest.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "Authentication.UnitTest.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/7.0.0.0": {
@@ -4396,6 +4439,13 @@
       "path": "azure.identity/1.6.0",
       "hashPath": "azure.identity.1.6.0.nupkg.sha512"
     },
+    "Bogus/34.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2KQAuMn3fLAQ2r6jeiffZnpv0bi3GCW3iRB2v1KeHIEBu8MNTh9dBlLTZwGvM0pr+9doKkU8L5JgCURmTmT88A==",
+      "path": "bogus/34.0.2",
+      "hashPath": "bogus.34.0.2.nupkg.sha512"
+    },
     "BouncyCastle.Cryptography/2.2.1": {
       "type": "package",
       "serviceable": true,
@@ -5840,6 +5890,11 @@
       "sha512": ""
     },
     "Authentication.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Authentication.UnitTest/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

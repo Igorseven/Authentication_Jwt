@@ -6,17 +6,17 @@ namespace Authentication.Domain.Interfaces.RepositoryContracts;
 
 public interface IUserIdentityRepository : IDisposable
 {
-    Task<string> GenerateTokenToChangePasswordAsync(UserIdentity accountIdentity);
-    Task<IdentityResult> SaveAsync(UserIdentity accountIdentity);
-    Task<IdentityResult> UpdateAsync(UserIdentity accountIdentity);
+    Task<string> GenerateTokenToChangePasswordAsync(User account);
+    Task<IdentityResult> SaveAsync(User account);
+    Task<IdentityResult> UpdateAsync(User account);
     Task<SignInResult> PasswordSignInAsync(string login, string password);
-    Task<IdentityResult> ChangePasswordAsync(UserIdentity entity, string currentPassword, string newPassword);
+    Task<IdentityResult> ChangePasswordAsync(User entity, string currentPassword, string newPassword);
     Task UserSignOutAsync();
-    Task<IList<string>> FindAllRolesAsync(UserIdentity accountIdentity);
-    Task<bool> HaveInTheDatabaseAsync(Expression<Func<UserIdentity, bool>> where);
+    Task<IList<string>> FindAllRolesAsync(User account);
+    Task<bool> HaveInTheDatabaseAsync(Expression<Func<User, bool>> where);
 
-    Task<UserIdentity?> FindByPredicateWithSelectorAsync(
-        Expression<Func<UserIdentity, bool>> predicate,
-        Expression<Func<UserIdentity, UserIdentity>>? selector = null,
+    Task<User?> FindByPredicateWithSelectorAsync(
+        Expression<Func<User, bool>> predicate,
+        Expression<Func<User, User>>? selector = null,
         bool asNoTracking = false);
 }

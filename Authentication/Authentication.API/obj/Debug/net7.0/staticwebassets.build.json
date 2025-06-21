@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "Q6uvN86RbnZGn1fyaFaxKdB0EW/fj3Yv8Cvxh1aumqw=",
+  "Hash": "iQxg7/Cv9qAaYj0BVxb/ofG7vzuddbZkJfDGabusvaY=",
   "Source": "Authentication.API",
   "BasePath": "_content/Authentication.API",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

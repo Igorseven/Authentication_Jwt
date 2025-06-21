@@ -4346,39 +4346,32 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\igors\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\igors\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.ApplicationService\\Authentication.ApplicationService.csproj",
+      "projectUniqueName": "C:\\Users\\igors\\OneDrive\\Documentos\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.ApplicationService\\Authentication.ApplicationService.csproj",
       "projectName": "Authentication.ApplicationService",
-      "projectPath": "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.ApplicationService\\Authentication.ApplicationService.csproj",
+      "projectPath": "C:\\Users\\igors\\OneDrive\\Documentos\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.ApplicationService\\Authentication.ApplicationService.csproj",
       "packagesPath": "C:\\Users\\igors\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.ApplicationService\\obj\\",
+      "outputPath": "C:\\Users\\igors\\OneDrive\\Documentos\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.ApplicationService\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\igors\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\igors\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.Infrastructure\\Authentication.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\igors\\Documents\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.Infrastructure\\Authentication.Infrastructure.csproj"
+            "C:\\Users\\igors\\OneDrive\\Documentos\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.Infrastructure\\Authentication.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\igors\\OneDrive\\Documentos\\Net7\\Authentication_Jwt_Poc\\Authentication_Jwt\\Authentication\\Authentication.Infrastructure\\Authentication.Infrastructure.csproj"
             }
           }
         }
@@ -4387,7 +4380,13 @@
         "warnAsError": [
           "NU1605"
         ]
-      }
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net7.0": {
@@ -4406,15 +4405,15 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[7.0.14, 7.0.14]"
+            "version": "[7.0.20, 7.0.20]"
           },
           {
             "name": "Microsoft.NETCore.App.Ref",
-            "version": "[7.0.14, 7.0.14]"
+            "version": "[7.0.20, 7.0.20]"
           },
           {
             "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[7.0.14, 7.0.14]"
+            "version": "[7.0.20, 7.0.20]"
           }
         ],
         "frameworkReferences": {
@@ -4422,7 +4421,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

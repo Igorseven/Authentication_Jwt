@@ -860,7 +860,10 @@
           "Authentication.Infrastructure": "1.0.0"
         },
         "runtime": {
-          "Authentication.ApplicationService.dll": {}
+          "Authentication.ApplicationService.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "Authentication.Domain/1.0.0": {
@@ -869,7 +872,10 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.0"
         },
         "runtime": {
-          "Authentication.Domain.dll": {}
+          "Authentication.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "Authentication.Infrastructure/1.0.0": {
@@ -881,7 +887,10 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.0"
         },
         "runtime": {
-          "Authentication.Infrastructure.dll": {}
+          "Authentication.Infrastructure.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

@@ -7,27 +7,27 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Authentication.Infrastructure.Repository;
-public class UserIdentityRepository : BaseRepository<UserIdentity>, IUserIdentityRepository
+public class UserIdentityRepository : BaseRepository<User>, IUserIdentityRepository
 {
-    private readonly UserManager<UserIdentity> _userManager;
-    private readonly SignInManager<UserIdentity> _signInManager;
+    private readonly UserManager<User> _userManager;
+    private readonly SignInManager<User> _signInManager;
 
     public UserIdentityRepository(ApplicationContext context,
-                                  UserManager<UserIdentity> userManager,
-                                  SignInManager<UserIdentity> signInManager)
+                                  UserManager<User> userManager,
+                                  SignInManager<User> signInManager)
         : base(context)
     {
         _userManager = userManager;
         _signInManager = signInManager;
     }
 
-    public async Task<bool> HaveInTheDatabaseAsync(Expression<Func<UserIdentity, bool>> where) => await DbSetContext.AnyAsync(where);
+    public async Task<bool> HaveInTheDatabaseAsync(Expression<Func<User, bool>> where) => await DbSetContext.AnyAsync(where);
 
-    public async Task<UserIdentity?> FindByPredicateWithSelectorAsync(Expression<Func<UserIdentity, bool>> predicate,
-                                                                      Expression<Func<UserIdentity, UserIdentity>>? selector = null,
+    public async Task<User?> FindByPredicateWithSelectorAsync(Expression<Func<User, bool>> predicate,
+                                                                      Expression<Func<User, User>>? selector = null,
                                                                       bool asNoTracking = false)
     {
-        IQueryable<UserIdentity> query = DbSetContext;
+        IQueryable<User> query = DbSetContext;
 
         if (asNoTracking)
             query = query.AsNoTracking();
@@ -38,19 +38,19 @@ public class UserIdentityRepository : BaseRepository<UserIdentity>, IUserIdentit
         return await query.FirstOrDefaultAsync(predicate);
     }
 
-    public async Task<IList<string>> FindAllRolesAsync(UserIdentity accountIdentity) =>
-        await _userManager.GetRolesAsync(accountIdentity);
+    public async Task<IList<string>> FindAllRolesAsync(User account) =>
+        await _userManager.GetRolesAsync(account);
 
-    public async Task<IdentityResult> SaveAsync(UserIdentity entity) =>
+    public async Task<IdentityResult> SaveAsync(User entity) =>
         await _userManager.CreateAsync(entity, entity.PasswordHash!);
 
-    public async Task<IdentityResult> UpdateAsync(UserIdentity accountIdentity) =>
-        await _userManager.UpdateAsync(accountIdentity);
+    public async Task<IdentityResult> UpdateAsync(User account) =>
+        await _userManager.UpdateAsync(account);
 
-    public async Task<string> GenerateTokenToChangePasswordAsync(UserIdentity entity) =>
+    public async Task<string> GenerateTokenToChangePasswordAsync(User entity) =>
         await _userManager.GeneratePasswordResetTokenAsync(entity);
 
-    public async Task<IdentityResult> ChangePasswordAsync(UserIdentity entity, string currentPassword, string newPassword)
+    public async Task<IdentityResult> ChangePasswordAsync(User entity, string currentPassword, string newPassword)
     {
         DetachedObject(entity);
 

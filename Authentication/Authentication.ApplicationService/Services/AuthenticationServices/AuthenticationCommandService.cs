@@ -14,44 +14,53 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Authentication.ApplicationService.Services.AuthenticationServices;
+
 public sealed class AuthenticationCommandService : IAuthenticationCommandService
 {
-    private readonly IRefreshTokenRepository _refreshTokenRepository;
+    private readonly IUserTokenRepository _userTokenRepository;
     private readonly INotificationHandler _notification;
-    private readonly IUserIdentityQueryService _userIdentityQueryService;
+    private readonly IUserQueryService _userQueryService;
     private readonly JwtTokenOptions _jwtTokenOptions;
     private readonly SymmetricSecurityKey _key;
     private const string SecurityAlgorithm = SecurityAlgorithms.HmacSha256;
 
-    public AuthenticationCommandService(IRefreshTokenRepository refreshTokenRepository,
-                                        IUserIdentityQueryService userIdentityQueryService,
-                                        INotificationHandler notification,
-                                        IOptions<JwtTokenOptions> options)
+    public AuthenticationCommandService(IUserTokenRepository userTokenRepository,
+        IUserQueryService userQueryService,
+        INotificationHandler notification,
+        IOptions<JwtTokenOptions> options)
     {
-        _refreshTokenRepository = refreshTokenRepository;
-        _userIdentityQueryService = userIdentityQueryService;
+        _userTokenRepository = userTokenRepository;
+        _userQueryService = userQueryService;
         _notification = notification;
         _jwtTokenOptions = options.Value;
         _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtTokenOptions.JwtKey));
     }
 
-    public void Dispose() => _refreshTokenRepository.Dispose();
+    public void Dispose() => _userTokenRepository.Dispose();
 
-    public async Task<AuthenticationLoginResponse?> GenerateAccessTokenAsync(UserLogin userLogin)
+    public async Task<AuthenticationLoginResponse?> GenerateAccessTokenAsync(AuthenticationRequest userLogin)
     {
-        if (!await _userIdentityQueryService.CheckLoginAndPasswordAsyncAsync(userLogin))
+        var user = await _userQueryService.FindByUserNameAsync(userLogin.Login);
+        
+        if (user is null)
         {
-            _notification.CreateNotification(AuthenticationServiceTrace.GenerateAccessTokenMethod, "Login ou senha inválido.");
+            _notification.CreateNotification(
+                AuthenticationServiceTrace.GenerateAccessTokenMethod,
+                "Login ou senha inválido.");
 
             return null;
         }
 
-        await _refreshTokenRepository.DeleteAsync(userLogin.Login);
+        await _userTokenRepository.DeleteAsync(r => r.Name == userLogin.Login &&
+                                                    r.LoginProvider == userLogin.SystemOrigin.ToString());
 
         var jwtToken = await GenerateJwtTokenAsync(userLogin.Login);
-        var newRefreshToken = await GenerateRefreshTokenAsync(userLogin.Login);
+        var newRefreshToken = await GenerateRefreshTokenAsync(
+            userLogin.Login,
+            userLogin.SystemOrigin,
+            user.Id);
 
-        return new()
+        return new AuthenticationLoginResponse
         {
             AccessToken = jwtToken,
             RefreshToken = newRefreshToken,
@@ -63,24 +72,32 @@ public sealed class AuthenticationCommandService : IAuthenticationCommandService
     {
         var extractUserRequest = CreateExtractUserRequest(updateAccessToken.AccessToken);
 
-        var userName = await _userIdentityQueryService.ExtractUserFromAccessTokenAsync(extractUserRequest);
+        var user = await _userQueryService.ExtractUserFromAccessTokenAsync(extractUserRequest);
 
-        if (userName is null)
+        if (user is null)
         {
-            _notification.CreateNotification(AuthenticationServiceTrace.GenerateRefreshTokenMethod, "Erro ao extrair credenciais do token expirado.");
+            _notification.CreateNotification(AuthenticationServiceTrace.GenerateRefreshTokenMethod,
+                "Erro ao extrair credenciais do token expirado.");
             return null;
         }
 
-        if (!await _refreshTokenRepository.HaveInTheDatabaseAsync(r => r.UserName == userName && r.Token == updateAccessToken.RefreshToken))
+        if (!await _userTokenRepository.HaveInTheDatabaseAsync(r =>
+                r.Name == user.Value.userName && r.Value == updateAccessToken.RefreshToken))
         {
-            _notification.CreateNotification(AuthenticationServiceTrace.GenerateRefreshTokenMethod, "Refresh Token inválido.");
+            _notification.CreateNotification(AuthenticationServiceTrace.GenerateRefreshTokenMethod,
+                "Refresh Token inválido.");
             return null;
         }
 
-        await _refreshTokenRepository.DeleteAsync(userName, updateAccessToken.RefreshToken);
+        await _userTokenRepository.DeleteAsync(
+            r => r.Name == user.Value.userName &&
+                 r.Value == updateAccessToken.RefreshToken);
 
-        var jwtToken = await GenerateJwtTokenAsync(userName);
-        var newRefreshToken = await GenerateRefreshTokenAsync(userName);
+        var jwtToken = await GenerateJwtTokenAsync(user.Value.userName);
+        var newRefreshToken = await GenerateRefreshTokenAsync(          
+            user.Value.userName,
+            updateAccessToken.SystemOrigin,
+            user.Value.userId);
 
         return new AuthenticationLoginResponse
         {
@@ -92,7 +109,7 @@ public sealed class AuthenticationCommandService : IAuthenticationCommandService
 
     private async Task<string> GenerateJwtTokenAsync(string userName)
     {
-        var claims = await _userIdentityQueryService.GetUseClaimsAsync(userName);
+        var claims = await _userQueryService.GetUseClaimsAsync(userName);
 
         var tokenDescription = new SecurityTokenDescriptor
         {
@@ -109,7 +126,7 @@ public sealed class AuthenticationCommandService : IAuthenticationCommandService
         return tokeHandler.WriteToken(token);
     }
 
-    private async Task<string> GenerateRefreshTokenAsync(string userName)
+    private async Task<string> GenerateRefreshTokenAsync(string userName, Guid systemOrigin, Guid userId)
     {
         using var randomGenerator = RandomNumberGenerator.Create();
 
@@ -117,13 +134,15 @@ public sealed class AuthenticationCommandService : IAuthenticationCommandService
         randomGenerator.GetBytes(randoNumbers);
         var createToken = Convert.ToBase64String(randoNumbers);
 
-        var refreshToken = new RefreshToken
+        var refreshToken = new UserToken
         {
-            UserName = userName,
-            Token = createToken
+            UserId = userId,
+            Name = userName,
+            LoginProvider = systemOrigin.ToString(),
+            Value = createToken
         };
 
-        await _refreshTokenRepository.SaveAsync(refreshToken);
+        await _userTokenRepository.SaveAsync(refreshToken);
 
         return createToken;
     }

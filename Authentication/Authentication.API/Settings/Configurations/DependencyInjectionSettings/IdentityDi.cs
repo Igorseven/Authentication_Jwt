@@ -11,7 +11,7 @@ public static class IdentityDi
     public static IServiceCollection AddIdentityDi(this IServiceCollection services)
     {
 
-        services.AddIdentityCore<UserIdentity>(options =>
+        services.AddIdentityCore<User>(options =>
         {
             options.SignIn.RequireConfirmedAccount = false;
             options.SignIn.RequireConfirmedPhoneNumber = false;
@@ -25,7 +25,7 @@ public static class IdentityDi
             options.Password.RequiredLength = 8;
         }).AddRoles<Role>()
           .AddRoleManager<RoleManager<Role>>()
-          .AddSignInManager<SignInManager<UserIdentity>>()
+          .AddSignInManager<SignInManager<User>>()
           .AddRoleValidator<RoleValidator<Role>>()
           .AddEntityFrameworkStores<ApplicationContext>()
           .AddDefaultTokenProviders();

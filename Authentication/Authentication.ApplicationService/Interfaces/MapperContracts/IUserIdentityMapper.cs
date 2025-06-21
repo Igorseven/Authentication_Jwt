@@ -1,11 +1,11 @@
-﻿using Authentication.ApplicationService.DataTransferObjects.Requests.UserIdentityRequest;
+﻿using Authentication.ApplicationService.DataTransferObjects.Requests.UserRequest;
 using Authentication.ApplicationService.DataTransferObjects.Responses.UserIdentityResponse;
 using Authentication.Domain.Entities;
 
 namespace Authentication.ApplicationService.Interfaces.MapperContracts;
 public interface IUserIdentityMapper
 {
-    UserIdentity DtoUserIdentityRegisterRequestToDomain(UserIdentityRegisterRequest userIdentityRegisterRequest);
+    User DtoRegisterToDomain(UserRegisterRequest userRegisterRequest);
 
-    UserIdentityDataResponse DomainToDtoUserIdentityData(UserIdentity userIdentity);
+    UserSimpleResponse DomainToSimpleResponse(User user);
 }
